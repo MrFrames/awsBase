@@ -48,16 +48,16 @@ class subSection(models.Model):
                                 null = True)
 
     type = models.ForeignKey(type,
-                             related_name="transportType",
+                             related_name="subTransportType",
                              on_delete=models.SET_NULL,
                              null=True)
 
     startPlace = models.ForeignKey(place,
-                                   related_name="sectionStart",
+                                   related_name="subSectionStart",
                                    on_delete=models.SET_NULL, null=True)
 
     endPlace = models.ForeignKey(place,
-                                 related_name="sectionEnd",
+                                 related_name="subSectionEnd",
                                  on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
