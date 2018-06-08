@@ -4,7 +4,8 @@ $(document).ready(function () {
             var y = $(this).scrollTop(); //set position from top in pixels
             if (y >= 100) {
                 $('.nav').addClass('scroll-nav');
-				$('.title').addClass('disappear');
+            } else if (y>=50) {
+                $('.title').addClass('disappear');
             } else {
                 $('.nav').removeClass('scroll-nav');
 				$('.title').removeClass('disappear');

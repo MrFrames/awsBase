@@ -50,7 +50,7 @@ h1.title {
     left: 0;
     z-index: 1;
 	transition: all .5s ease;
-	-webkit-transition: all .5s ease;
+	-webkit-transition: all .5s ease;/* Don't disappear SLOWER. Disappear SOONER*/  
 }
 
 .disappear { /*for the fading out h1 title*/
@@ -85,7 +85,7 @@ h3 {
 
 .content {
 	position: relative;
-	top: 7.5em;
+	top: 11.5em;
 }
 
 p.intro {
