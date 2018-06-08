@@ -1,10 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>HomePage</title>
+    <meta charset="utf-8">
+    <title>Brown Girl On A Bike</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Fira+Sans" rel="stylesheet"> 
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>   
+    <script src="main.js"></script>
 </head>
 <body>
+	<div id="top"></div>
+    <div class="header">
+        <h1 class="title">Brown Girl On A Bike</h1>
+        <div class="nav">
+            <ul>
+                <li>What is this?</li>
+                <li>Pay Me A Visit</li>
+                <li>Blog</li>
+                <li>Support Me</li>
+                <li>Contact</li>
+            </ul>
+        </div>
+    </div>
+	
+	<h3 class="back-to-map"><a href="#top">^^^<br>BACK TO MAP</a></h3>
+	
+   <div class="content">
+		<!--<p class="intro">Hello, I'm Farha and I'm cycling around the WHOLE WORLD. You can see my whereabouts on this map, as well as where I've been and where I am going.</p>
+-->
+		<div id="googleMap"></div>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj6i75TUGUFEf-qaexR0kfW60w-G2XmEs&callback=mainMap"></script>
+
+		<!-- API KEY: 
+	AIzaSyDj6i75TUGUFEf-qaexR0kfW60w-G2XmEs
+	-->
+
+
+	
+		    <div class="section" id="what">
+				<h2 class="sec-tit">What is this?</h2>
+				 <p>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend rhoncus quam eu pretium. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ornare elit nec rhoncus tempor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris congue viverra quam eu egestas. Praesent a lectus eu urna condimentum elementum eu imperdiet ligula. Maecenas commodo lacinia feugiat. Aliquam erat volutpat. Maecenas id orci fermentum, tristique libero sit amet, pulvinar orci. Donec iaculis lorem mi, nec vehicula est sagittis ac. Sed dolor urna, tincidunt in metus sed, congue dictum lorem. Nullam at tincidunt velit. Mauris eget justo vitae quam accumsan maximus et sit amet elit. Praesent eget neque libero. Proin nec vestibulum justo.
+
+Ut sed eros non lacus semper condimentum. Vivamus iaculis pharetra nibh, faucibus porta purus sagittis ultricies. Nunc ultricies sed urna vel vestibulum. Nunc hendrerit, diam in lobortis tincidunt, velit leo dignissim turpis, vel pulvinar nisi magna vel odio. Sed justo libero, sollicitudin et tortor dignissim, mattis rutrum orci. Nullam vel nisl non purus consequat molestie eu vitae dui. Vestibulum et semper odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In hac habitasse platea dictumst. Aliquam non quam faucibus, sollicitudin tellus ac, dictum lectus. </p>
+			</div>
+		
+
+
+			<div class="section" id="visit">
+				<h2 class="sec-tit">Pay Me A Visit</h2>
+				 <p>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend rhoncus quam eu pretium. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ornare elit nec rhoncus tempor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris congue viverra quam eu egestas. Praesent a lectus eu urna condimentum elementum eu imperdiet ligula. Maecenas commodo lacinia feugiat. Aliquam erat volutpat. Maecenas id orci fermentum, tristique libero sit amet, pulvinar orci. Donec iaculis lorem mi, nec vehicula est sagittis ac. Sed dolor urna, tincidunt in metus sed, congue dictum lorem. Nullam at tincidunt velit. Mauris eget justo vitae quam accumsan maximus et sit amet elit. Praesent eget neque libero. Proin nec vestibulum justo.
+
+Ut sed eros non lacus semper condimentum. Vivamus iaculis pharetra nibh, faucibus porta purus sagittis ultricies. Nunc ultricies sed urna vel vestibulum. Nunc hendrerit, diam in lobortis tincidunt, velit leo dignissim turpis, vel pulvinar nisi magna vel odio. Sed justo libero, sollicitudin et tortor dignissim, mattis rutrum orci. Nullam vel nisl non purus consequat molestie eu vitae dui. Vestibulum et semper odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In hac habitasse platea dictumst. Aliquam non quam faucibus, sollicitudin tellus ac, dictum lectus. </p>
+			</div>
+	
+			 <div class="section" id="blog">
+				<h2 class="sec-tit">Blog</h2>
+				 <p></p>
+			</div>
+	   	
+
+		
+			<div class="section" id="support">
+				<h2 class="sec-tit">Support</h2>
+				 <p>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend rhoncus quam eu pretium. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ornare elit nec rhoncus tempor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris congue viverra quam eu egestas. Praesent a lectus eu urna condimentum elementum eu imperdiet ligula. Maecenas commodo lacinia feugiat. Aliquam erat volutpat. Maecenas id orci fermentum, tristique libero sit amet, pulvinar orci. Donec iaculis lorem mi, nec vehicula est sagittis ac. Sed dolor urna, tincidunt in metus sed, congue dictum lorem. Nullam at tincidunt velit. Mauris eget justo vitae quam accumsan maximus et sit amet elit. Praesent eget neque libero. Proin nec vestibulum justo.
+
+Ut sed eros non lacus semper condimentum. Vivamus iaculis pharetra nibh, faucibus porta purus sagittis ultricies. Nunc ultricies sed urna vel vestibulum. Nunc hendrerit, diam in lobortis tincidunt, velit leo dignissim turpis, vel pulvinar nisi magna vel odio. Sed justo libero, sollicitudin et tortor dignissim, mattis rutrum orci. Nullam vel nisl non purus consequat molestie eu vitae dui. Vestibulum et semper odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In hac habitasse platea dictumst. Aliquam non quam faucibus, sollicitudin tellus ac, dictum lectus. </p>
+			</div>
+		
+
+		
+			<div class="section" id="contact">
+				<h2 class="sec-tit">Contact</h2>
+				 <p></p>
+			</div>
+		
+	   
+	</div> 
+   
 
 </body>
 </html>
