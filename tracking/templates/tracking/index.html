@@ -5,10 +5,23 @@
     <title>Title</title>
 </head>
 <body>
-    <ul>
-    {% for coord in object_list %}
-        <li>{{coord.lat}}:{{coord.lon}}</li>
+    <h1>Sections:</h1>
+    {% for section in sections %}
+        <h2>{{ section.name }}:</h2>
+        <p>By {{section.type}}</p>
+        <ul>
+            {% if not section.startPlace in section.place_set.all %}
+                <li>{{ section.startPlace.name }}</li>
+            {% endif %}
+        {% for place in places %}
+            {% if place.section.name == section.name %}
+            <li>{{ place.name }} </li>
+            {% endif %}
+        {% endfor %}
+            {% if not section.endPlace in section.place_set.all %}
+                <li>{{ section.endPlace.name }}</li>
+            {% endif %}
+        </ul>
     {% endfor %}
-    </ul>
 </body>
 </html>

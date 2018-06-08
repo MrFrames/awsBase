@@ -25,7 +25,9 @@ SECRET_KEY = 'aptxp_*%$gyfqnf(+w*l#vj$r17lx43(tc6_woiyz)9^p6ry_z'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['*']
+#ALLOWED_HOSTS = ['18.216.164.30'] # -uncomment in production
 
 
 # Application definition
@@ -81,6 +83,20 @@ DATABASES = {
     }
 }
 
+# Uncomment & comment above for Production:
+'''
+DATABASES = {
+  'default': {
+      'ENGINE': 'django.db.backends.mysql',
+      'NAME': 'djangostack',
+      'HOST': '/opt/bitnami/mysql/tmp/mysql.sock',
+      'PORT': '3306',
+      'USER': 'root',
+      'PASSWORD': 'A9t0ueEzNa9V'
+  }
+}
+'''
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -118,4 +134,31 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+# Uncomment for production:
+'''
+
+STATIC_ROOT = "/opt/bitnami/apps/django/django_projects/Project/static/"
+
+MEDIA_ROOT = "/opt/bitnami/apps/django/django_projects/Project/media/"
+
+'''
+
+MEDIA_URL = '/media/'
+
 STATIC_URL = '/static/'
+
+'''
+
+#STATICFILES_DIRS =  ["/opt/bitnami/apps/django/lib/python3.6/site-packages/django/contrib/admin/"]
+
+
+# Security settings.
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+SECURE_BROWSER_XSS_FILTER = True
+
+CSRF_COOKIE_SECURE = True
+
+X_FRAME_OPTIONS = "Deny"
+'''
