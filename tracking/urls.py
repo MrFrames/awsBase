@@ -19,5 +19,7 @@ from django.conf.urls import url,include
 from .views import *
 
 urlpatterns = [
-    url(r'^',homeView, name = "home"),
+    url(r'^tracking/georgia/$',geo, name = "Geo"),
+    url(r'^tracking/ben/$',ben, name = "Ben"),
+    url(r'^tracking/comb/$',comb, name = "Comb"),
 ]

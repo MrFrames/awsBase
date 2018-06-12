@@ -1,6 +1,7 @@
 from django.db import models
 import datetime
-from .Coords import haversine
+from .coords import haversine
+from colorful.fields import RGBColorField
 # Create your models here
 
 class type(models.Model):
@@ -13,6 +14,7 @@ class type(models.Model):
 class section(models.Model):
     name = models.CharField(max_length=200, default = "unnamed")
     order = models.IntegerField()
+    color = RGBColorField()
 
     startPlace = models.ForeignKey('place',
                                    related_name="start",
