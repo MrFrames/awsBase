@@ -1,13 +1,17 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
+	<meta charset="utf-8">
     <title>Brown Girl On A Bike</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src= "main.js"></script>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Fira+Sans" rel="stylesheet"> 
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>   
-    <script src="main.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Fira+Sans" rel="stylesheet">
+	<script>
+		var map;
+        var secPlaces = {{ sorted_json | safe }};
+    </script>
 </head>
 <body>
 	<div id="top"></div>

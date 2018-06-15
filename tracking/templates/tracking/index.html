@@ -1,0 +1,78 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Json Test page</title>
+    <link rel = "stylesheet" href = "{% static 'tracking/styles.CSS' %}">
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset= "utf-8">
+    <style>
+        #map {
+            width: 100%;
+            height: 700px;
+            margin: 0 auto 5em auto;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+        <script
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXPl8EoO-pH5vKxjnfuVRGrcB8PjI_8w4&callback=initMap" async defer></script>
+    <div id="jsonTest">
+        <script>
+            var map;
+            var secPlaces = {{ sorted_json | safe }};
+            var sectionNames = Object.keys(secPlaces);
+            var forLimit = sectionNames.length;
+
+            function initMap() {
+                var polygons = [];
+                map = new google.maps.Map(document.getElementById('map'),{
+                    center: {lat: 51.5287718, lng: -0.2416808},
+                    zoom: 9
+                });
+
+                /*
+                Below loops through the sections, then each place in the
+                section, adding it's lat/lon coords to the polys array.
+                */
+                for (i = 0; i < forLimit; i++){
+                places = secPlaces[sectionNames[i]]["places"];
+                poly = [];
+                for (x=0; x < places.length; x++){
+                    poly.push({lat:places[x][1],lng:places[x][2]});
+                    }
+
+                /*
+                Below pushes a google.maps.Polyline object to
+                the polygons array for each section, using the poly array as
+                the path. Then the .setMap method is used to apply the last
+                (current) Polyline object in the Polygons array to the map.
+                */
+
+                polygons.push(new google.maps.Polyline({
+                    path: poly,
+                    geodesic: false,
+                    strokeColor: secPlaces[sectionNames[i]]["color"],
+                    strokeOpacity: 0.45,
+                    strokeWeight: 3
+                    })
+                );
+                polygons[polygons.length -1].setMap(map);
+            }
+
+        }
+            document.write("Map working.")
+        </script>
+        <h1>Sections:</h1>
+
+    </div>
+</body>
+</html>

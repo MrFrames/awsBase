@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Sections:</h1>
+    {% for section in sections %}
+        <h2>{{ section.name }}:</h2>
+        <p>By {{section.type}}</p>
+        <ul>
+            {% if not section.startPlace in section.place_set.all %}
+                <li>{{ section.startPlace.name }}</li>
+            {% endif %}
+        {% for place in places %}
+            {% if place.section.name == section.name %}
+            <li>{{ place.name }} </li>
+            {% endif %}
+        {% endfor %}
+            {% if not section.endPlace in section.place_set.all %}
+                <li>{{ section.endPlace.name }}</li>
+            {% endif %}
+        </ul>
+    {% endfor %}
+    {% for place in places %}
+        {{ place.name }} : {{ place.section.name }}<br/>
+    {% endfor %}
+    <script>
+        var secPlaces = {{ sorted_json | safe }};
+        sectionNames = Object.keys(secPlaces);
+        forLimit = sectionNames.length;
+        for (i = 0; i < forLimit; i++){
+            document.write("<h1>" + sectionNames[i] + "</h1>");
+            placeNames = secPlaces[sectionNames[i]];
+            document.write("<ul>")
+            for (x=0; x < placeNames.length; x++){
+                document.write("<li>" + placeNames[x][0] + "<br/>");
+            }
+            document.write("</ul>")
+        }
+        document.write("Hello world");
+    </script>
+</body>
+</html>

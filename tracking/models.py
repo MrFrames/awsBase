@@ -95,8 +95,9 @@ class meetUp(models.Model):
                                 null= True)
 
     def __str__(self):
-        return self.name + ": @" + self.place.name + ", in section: " + \
-               self.section.name
+        return self.name \
+
+    #+ ": @" + self.place.name + ", in section: " + self.section.name
 
 class pastData(models.Model):
     time = models.DateTimeField(default = '2018-04-15 14:30:59')
@@ -131,8 +132,9 @@ class post(models.Model):
                                 null=True)
 
     def __str__(self):
-        return self.title + ": @" + self.place.name + ", in section: " + \
-               self.section.name
+        return self.title
+
+        #+ ":" + , in section: " + self.section.name
 
 def get_past_data():
     '''
