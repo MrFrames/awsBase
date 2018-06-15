@@ -95,7 +95,7 @@ p.intro {
 
 #googleMap {
     width: 100%;
-    height: 700px;
+    height: 650px;
 	margin: 0 auto 5em auto;
 }
 
@@ -136,8 +136,7 @@ h2.sec-tit {
 
 
 
-
-											/* LINK STYLING */
+				    /* LINK STYLING */
 
 a {
 	text-decoration: none;
