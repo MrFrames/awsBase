@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Fira+Sans" rel="stylesheet">
 	<script>
 		var map;
-        var secPlaces = {{ sorted_json | safe }};
+        var secPlaces = {"London to Dover": {"color": "#ff0000", "places": [["London", 51.5285578, -0.2420243], ["Croyden", 51.3679589, -0.2223224], ["Rochester", 51.3811167, 0.4165043], ["Dover", 51.1263712, 1.2309496]]}, "Dover to Calais": {"color": "#00ff40", "places": [["Dover", 51.1263712, 1.2309496], ["Calais", 50.9518803, 1.8339368]]}, "Calais to Berlin": {"color": "#004080", "places": [["Calais", 50.9518803, 1.8339368], ["Paris", 48.8588536, 2.3120406], ["Frankfurt", 50.1211909, 8.5665247], ["Berlin", 52.5067614, 13.2846512]]}, "Berlin to Budapest": {"color": "#FF0000", "places": [["Berlin", 52.5067614, 13.2846512], ["Budapest", 47.4808722, 18.8501225]]}};
     </script>
 </head>
 <body>
