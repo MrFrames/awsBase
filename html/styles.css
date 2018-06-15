@@ -23,7 +23,7 @@ body {
 	width: 100%;
 	margin: 0 auto;
 	padding-bottom: 1em;
-	border-bottom: 10px double black;
+	border-bottom: 10px double #58310d;
 	z-index: 1;
     top: 6.5em;
 	transition: all .5s ease;
@@ -70,6 +70,15 @@ ul {
 li {
     padding: 0 4em;
     font-size: 1.3em;
+}
+
+p,
+li,
+h3,
+h2,
+h1,
+a {
+    color: #58310d;
 }
 
 h1,
@@ -140,7 +149,6 @@ h2.sec-tit {
 
 a {
 	text-decoration: none;
-	color: black;
 }
 
 a:hover {
