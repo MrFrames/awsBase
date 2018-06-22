@@ -4,11 +4,10 @@ $(document).ready(function () {
             var y = $(this).scrollTop(); //set position from top in pixels
             if (y >= 100) {
                 $('.nav').addClass('scroll-nav');
-            } else if (y>=50) {
-                $('.title').addClass('disappear');
+                $('h1.title').addClass('disappear');
             } else {
                 $('.nav').removeClass('scroll-nav');
-				$('.title').removeClass('disappear');
+				        $('h1.title').removeClass('disappear');
             }
         });
 	
@@ -21,6 +20,13 @@ $(document).ready(function () {
 
             }
      });
+
+// $('.nav ul li a').click(function(evt) {
+//       evt.preventDefault();
+//       $('html, body').stop(){
+//         scrollTop: $( $(this).attr('href') ).offset(100).top
+//       };
+//     });
   
 });
 
@@ -33,53 +39,74 @@ function initMap() {
         center: {lat: 51.5287718, lng: -0.2416808},
         zoom: 9,
         styles: [
-            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
-            {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
-            {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+            {elementType: 'geometry', 
+             stylers: [{color: '#fafae3'}]},
+            {elementType: 'labels.text.stroke', 
+             stylers: [{color: '#000000'},
+                      {strokeWeight: '1'},
+                      {visibility: 'off'}]},
+            
+            {elementType: 'labels.text.fill', 
+             stylers: [{color: '#58310d'},
+                      {fontWeight: '400'}]},
             {
               featureType: 'administrative.locality',
               elementType: 'labels.text.fill',
-              stylers: [{color: '#d59563'}]
+              stylers: [{/*fontFamily: 'Fira Sans'*/},
+                        {color: '#58310d'}]
             },
+            
+            {
+              featureType: 'administrative.locality',
+              elementType: 'labels.text',
+              stylers: [{fontFamily: 'Fira Sans'},
+                        {color: '#58310d'},
+                       {fontWeight: '900'}]
+            },
+            
             {
               featureType: 'poi',
               elementType: 'labels.text.fill',
-              stylers: [{color: '#d59563'}]
+              stylers: [{color: '#58310d'}]
             },
             {
               featureType: 'poi.park',
               elementType: 'geometry',
-              stylers: [{color: '#263c3f'}]
+              stylers: [{color: '#efedd0'}]
             },
             {
               featureType: 'poi.park',
               elementType: 'labels.text.fill',
-              stylers: [{color: '#6b9a76'}]
+              stylers: [{color: '#9a6b83'}]
             },
-            {
-              featureType: 'road',
-              elementType: 'geometry',
-              stylers: [{color: '#38414e'}]
-            },
-            {
-              featureType: 'road',
-              elementType: 'geometry.stroke',
-              stylers: [{color: '#212a37'}]
-            },
+
             {
               featureType: 'road',
               elementType: 'labels.text.fill',
               stylers: [{color: '#9ca5b3'}]
             },
             {
+              featureType: 'road.local',
+              elementType: 'geometry',
+              stylers: [{color: '#e3e0bd'},
+                       {weight: 1}]
+            },
+            {
+              featureType: 'road.arterial',
+              elementType: 'geometry',
+              stylers: [{color: '#e3e0bd'},
+                        {weight: 1}
+                       /*{visibility: 'off'}*/]
+            },
+            {
               featureType: 'road.highway',
               elementType: 'geometry',
-              stylers: [{color: '#746855'}]
+              stylers: [{color: '#c3bc89'}]
             },
             {
               featureType: 'road.highway',
               elementType: 'geometry.stroke',
-              stylers: [{color: '#1f2835'}]
+              stylers: [{color: '#c3bc89'}]
             },
             {
               featureType: 'road.highway',
@@ -89,7 +116,8 @@ function initMap() {
             {
               featureType: 'transit',
               elementType: 'geometry',
-              stylers: [{color: '#2f3948'}]
+              stylers: [{color: '#2f3948'},
+                       {visibility: 'off'}]
             },
             {
               featureType: 'transit.station',
@@ -99,17 +127,17 @@ function initMap() {
             {
               featureType: 'water',
               elementType: 'geometry',
-              stylers: [{color: '#17263c'}]
+              stylers: [{color: '#cac392'}]
             },
             {
               featureType: 'water',
               elementType: 'labels.text.fill',
-              stylers: [{color: '#515c6d'}]
+              stylers: [{color: '#cac392'}]
             },
             {
               featureType: 'water',
               elementType: 'labels.text.stroke',
-              stylers: [{color: '#17263c'}]
+              stylers: [{color: '#cac392'}]
             }
           ]
 
