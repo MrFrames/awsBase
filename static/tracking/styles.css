@@ -148,10 +148,10 @@ a:hover {
 	text-decoration: underline;
 }
 
-
-
-
-
+.postBox{
+    width: 100px;
+    display: inline-block;
+}
 
 
 

@@ -28,7 +28,7 @@ function initMap() {
 
     var forLimit = sectionNames.length;
     var polygons = [];
-    var map = new google.maps.Map(document.getElementById('googleMap'),{
+    map = new google.maps.Map(document.getElementById('googleMap'),{
         center: {lat: 51.5287718, lng: -0.2416808},
         zoom: 9
     });
@@ -41,33 +41,9 @@ function initMap() {
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(16, 32)
     };
-    
-    console.log(allPosts[0])
 
     var posts = setMarkers(map,allPosts,image);
     var meets = setMarkers(map,allMeetUps,image);
-    
-    for (x = 0;x < posts.length;x++){
-        console.log(posts[x]);
-        console.log(posts.length)
-        var contentString = "<h1>" + allPosts[x][2] + "</h1>";
-        console.log(allPosts[x][2]);
-        
-        posts[x].info = new google.maps.InfoWindow({
-            content: contentString
-        });
-        
-        /*
-        var marker = new google.maps.Marker({
-            position : {lat:51.082572,lng:3.574402},
-            map : map,
-            title : "Test"
-        });*/
-        
-        posts[x].addListener('click', function(){
-            this.info.open(posts[x].get('map'),this);
-        });
-    };
 
     /*
     Below loops through the sections, then each place in the
@@ -89,12 +65,9 @@ function initMap() {
 
         polygons.push(setPoly(sectionNames[i],secPlaces[sectionNames[i]]["color"],poly))
 
-
-    polygons[i].setMap(map);
-
-    google.maps.event.addListener(polygons[i],'click',function() {setToSection(this.name,map,posts,meets,polygons,image)})
-
-
+        polygons[i].setMap(map);
+    
+        google.maps.event.addListener(polygons[i],'click',function() {setToSection(this.name,map,posts,meets,polygons,image)})
     }
 
     map.fitBounds(bounds);
@@ -114,8 +87,21 @@ function setPoly(secName,color,poly){
     return new_poly
 }
 
+function get_postWindowContent(post){
+  title = post[2]
+  image = post[3]
+  content = post[4]
+
+  var content_string = "<h1>" + title + "</h1><br/>" +
+  "<img src = '" + image + "'><br/>" +
+  "<p>" + content + "</p>"
+
+  return content_string
+}
+
 function setMarkers(map,markers,icon) {
-  var markerArray = [];
+  var mArray = [];
+  var iArray = [];
 
   var shape = {
     coords: [1, 1, 1, 20, 18, 20, 18, 1],
@@ -124,39 +110,28 @@ function setMarkers(map,markers,icon) {
 
   for (var i = 0; i < markers.length; i++) {
     var post = markers[i];
-    markerArray.push(new google.maps.Marker({
+    content_string = "IT WORKED!!!"
+    iArray.push(new google.maps.InfoWindow({
+      content:content_string,
+      maxWidth = 200
+    }));
+    console.log(content_string)
+    mArray.push(new google.maps.Marker({
       position: {lat: post[0], lng: post[1]},
       map: map,
       icon: icon,
       shape: shape,
       title: post[2]
     }));
-      //markerArray[markerArray.length-1].setMap(map);
   }
-  return markerArray
+  for (var i = 0; i < markers.length; i++) {
+    mArray[i].addListener('click',function(){
+      iArray[i].open(map,mArray[i]);
+    })
+  }
 }
 
-function addPostInfoWindows(map,postMarkerOjects,postData){
-    var posts = postMarkerOjects
-    for (i = 0;i<posts.length;i++){
-        console.log(posts[i]);
-        var contentString = "<h1>This is a test</h1>";
-        
-        var infowindow = new google.maps.InfoWindow({
-            content: contentString
-        });
-        
-        var marker = new google.maps.Marker({
-            position : {lat:51.082572,lng:3.574402},
-            map : map,
-            title : "Test"
-        });
-        
-        posts[i].addListener('click', function(){
-            infowindow.open(posts[i].get('map'),posts[i]);
-        })
-    }
-    
+  return iArray
 }
 
 function setToSection(sectionName,map,posts,meets,polygons,icon){
@@ -170,12 +145,12 @@ function setToSection(sectionName,map,posts,meets,polygons,icon){
     }
     map.fitBounds(new_bounds);
     new_bounds = null;
-    //posts = secPlaces[sectionName]["posts"];
-    //meetUps = secPlaces[sectionName]["meetUps"];
+    posts = secPlaces[sectionName]["posts"];
+    meetUps = secPlaces[sectionName]["meetUps"];
     //setPoly(sectionName,secPlaces[sectionName]["color"],waypoints).setMap(map)
-    //setMarkers(map,posts,icon);
-    //setMarkers(map,meetUps,icon);
-
+    setMarkers(map,posts,icon);
+    setMarkers(map,meetUps,icon);
+    
 }
 
 function wipeMap(map,posts,meets,polygons){

@@ -28,7 +28,9 @@
     <div id="jsonTest">
         <script>
             var map;
-            var secPlaces = {{ sorted_json | safe }};
+            var secPlaces = {{ section_json | safe }};
+            var allPosts = {{ posts_raw | safe }}
+            var allMeetUps = {{ meetUps_raw | safe }}
             var sectionNames = Object.keys(secPlaces);
             var forLimit = sectionNames.length;
 

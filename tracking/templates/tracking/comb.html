@@ -12,8 +12,13 @@
     <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Fira+Sans" rel="stylesheet">
 	<script>
 		var map;
-        var secPlaces = {{ sorted_json | safe }};
-
+        var secPlaces = {{ sections_json | safe }};
+        var allPosts = {{ all_posts | safe}};
+        var allMeetUps = {{ all_meetUps | safe }};
+        var sectionNames = Object.keys(secPlaces);
+        var iconPath = '{% static "tracking/custom-marker.png" %}';
+        var meets = [];
+        var posts = [];
 	</script>
 
 </head>
@@ -38,7 +43,7 @@
 	   <!--<p class="intro">Hello, I'm Farha and I'm cycling around the WHOLE WORLD. You can see my whereabouts on this map, as well as where I've been and where I am going.</p>
 -->
 	   <div id="googleMap"></div>
-	   	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXPl8EoO-pH5vKxjnfuVRGrcB8PjI_8w4&callback=initMap" ></script>
+	   	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj6i75TUGUFEf-qaexR0kfW60w-G2XmEs&callback=initMap" ></script>
 
 		<!-- API KEY: 
 	AIzaSyDj6i75TUGUFEf-qaexR0kfW60w-G2XmEs
@@ -48,7 +53,7 @@
 	
 		    <div class="section" id="what">
 				<h2 class="sec-tit">What is this?</h2>
-				 <p>
+				 	<script>document.write(iconPath)</script><p>
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend rhoncus quam eu pretium. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ornare elit nec rhoncus tempor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris congue viverra quam eu egestas. Praesent a lectus eu urna condimentum elementum eu imperdiet ligula. Maecenas commodo lacinia feugiat. Aliquam erat volutpat. Maecenas id orci fermentum, tristique libero sit amet, pulvinar orci. Donec iaculis lorem mi, nec vehicula est sagittis ac. Sed dolor urna, tincidunt in metus sed, congue dictum lorem. Nullam at tincidunt velit. Mauris eget justo vitae quam accumsan maximus et sit amet elit. Praesent eget neque libero. Proin nec vestibulum justo.
 
@@ -67,8 +72,14 @@ Ut sed eros non lacus semper condimentum. Vivamus iaculis pharetra nibh, faucibu
 			</div>
 	
 			 <div class="section" id="blog">
-				<h2 class="sec-tit">Blog</h2>
-				 <p></p>
+                 <h2 class="sec-tit">Blog</h2>
+				 {% for post in 3posts %}
+                 <div class = "postBox">
+                    <h1>{{ post.title }}</h1><br/>
+                    <img src = "{{ post.image.url }}", width=30%><br/>
+                    <p> {{post.content}}...<a href="http://127.0.0.1:8000/blog/?page={{post.id}}">read more.</a></p>
+                 </div>
+                 {% endfor %}
 			</div>
 	   	
 

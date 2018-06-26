@@ -1,0 +1,22 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% for post in object_list %}
+    <h1>{{ post.title }}</h1><br/>
+    <img src = "{{ post.image.url }}"><br/>
+    <p> {{post.content}} </p>
+    {% endfor %}
+    {% if object_list.has_previous %}
+        <h3><a href="?page={{ object_list.previous_page_number }}">Previous</a></h3><br/>
+    {% endif %}
+        {% if object_list.has_next %}
+        <h3><a href="?page={{ object_list.next_page_number }}">Next</a></h3><br/>
+    {% endif %}
+
+</body>
+</html>

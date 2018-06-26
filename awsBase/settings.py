@@ -150,6 +150,9 @@ MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 '''
 
 #STATICFILES_DIRS =  ["/opt/bitnami/apps/django/lib/python3.6/site-packages/django/contrib/admin/"]

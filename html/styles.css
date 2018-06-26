@@ -23,7 +23,7 @@ body {
 	width: 100%;
 	margin: 0 auto;
 	padding-bottom: 1em;
-	border-bottom: 10px double black;
+	border-bottom: 10px double #58310d;
 	z-index: 1;
     top: 6.5em;
 	transition: all .5s ease;
@@ -48,13 +48,15 @@ h1.title {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 0;
+    opacity: 1;
 	transition: all .5s ease;
 	-webkit-transition: all .5s ease;/* Don't disappear SLOWER. Disappear SOONER*/  
 }
 
 .disappear { /*for the fading out h1 title*/
 	opacity: 0;
+    color: white;
 	
 }
 
@@ -70,6 +72,15 @@ ul {
 li {
     padding: 0 4em;
     font-size: 1.3em;
+}
+
+p,
+li,
+h3,
+h2,
+h1,
+a {
+    color: #58310d;
 }
 
 h1,
@@ -96,7 +107,7 @@ p.intro {
 #googleMap {
     width: 100%;
     height: 650px;
-	margin: 0 auto 5em auto;
+	margin: 0 auto 10em auto;
 }
 
 .back-to-map {
@@ -115,6 +126,8 @@ p.intro {
 }
 
 							/* styling for main content in sections */
+
+
 
 .section {
 	width: 100%;
@@ -140,7 +153,6 @@ h2.sec-tit {
 
 a {
 	text-decoration: none;
-	color: black;
 }
 
 a:hover {
