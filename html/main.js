@@ -21,8 +21,8 @@ $(document).ready(function () {
             }
      });
 
-// $('.nav ul li a').click(function(evt) {
-//       evt.preventDefault();
+// $('a').click(function (event) {
+//       event.preventDefault();
 //       $('html, body').stop(){
 //         scrollTop: $( $(this).attr('href') ).offset(100).top
 //       };
