@@ -17,6 +17,12 @@ body {
 	background: white;
 }
 
+:target { /*seleects all anchors */
+    display: block;
+    position: relative;
+    top: -120px;
+}
+
 .nav {
 	background: rgba(255, 255, 255, 1);
 	position: fixed;
@@ -50,12 +56,14 @@ h1.title {
     left: 0;
     z-index: 0;
     opacity: 1;
+    height: 100px;
 	transition: all .5s ease;
 	-webkit-transition: all .5s ease;/* Don't disappear SLOWER. Disappear SOONER*/  
 }
 
 .disappear { /*for the fading out h1 title*/
 	opacity: 0;
+    height: 0;
     color: white;
 	
 }
@@ -93,6 +101,8 @@ li,
 h3 {
     font-family: 'Fira Sans', sans-serif;
 }
+
+/* ------------- CONTENT ------------- */
 
 .content {
 	position: relative;
