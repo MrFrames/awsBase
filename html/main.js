@@ -30,6 +30,16 @@ $(document).ready(function () {
   
 });
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+>>>>>>> a279d0bbfd9a83884d0e81cf78e3a6ed95404297
+=======
+>>>>>>> a279d0bbfd9a83884d0e81cf78e3a6ed95404297
+>>>>>>> Development
 
 function initMap() {
     var sectionNames = Object.keys(secPlaces);

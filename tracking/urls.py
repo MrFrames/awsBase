@@ -19,7 +19,10 @@ from django.conf.urls import url,include
 from .views import *
 
 urlpatterns = [
-    url(r'^tracking/georgia/$',geo, name = "Geo"),
-    url(r'^tracking/ben/$',ben, name = "Ben"),
-    url(r'^tracking/comb/$',comb, name = "Comb"),
+    url(r'^tracking/$',comb, name = "Comb"),
+    url(r'^tracking/input/$',input, name="input"),
+    url(r'^tracking/extrapolate_data/$',ext,name='ext'),
+    url(r'^blog/$', postList , name="blog"),
+    url(r'^dashboard/$', dash, name="dash"),
+    url(r'^edit_post/$', postView, name="post_list"),
 ]

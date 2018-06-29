@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PostList</title>
+</head>
+<body>
+    <h1>all posts:</h1>
+    {% for post in all_posts %}
+    <a href="/dashboard/?postPk={{ post.pk }}">{{ post.title }}</a><br/>
+    {% endfor %}
+</body>
+</html>

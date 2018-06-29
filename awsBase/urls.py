@@ -16,8 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include,url
+from django.contrib.staticfiles.urls import static
+from django.conf import settings
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^accounts/login/$', auth_views.login, name='login'),
+    url(r'^logout/$', auth_views.logout, {'next_page':'/tracking'},
+        name='logout'),
     url(r'^',include("tracking.urls")),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

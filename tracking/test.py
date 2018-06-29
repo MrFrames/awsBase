@@ -11,20 +11,17 @@ class sectionPlaceTestCase(TestCase):
         london = place.objects.create(name = "London",
                                       lat = 51.5285578,
                                       lon = -0.2420243,
-                                      order = 0,
-                                      section = None)
+                                      order = 0)
 
         rochester = place.objects.create(name= "Rochester",
                                          lat=51.3811167,
                                          lon=0.4165043,
-                                         order=0,
-                                         section=None)
+                                         order=0)
 
         dover = place.objects.create(name= "Dover",
                                      lat=51.1263712,
                                      lon=1.2309496,
-                                     order=0,
-                                     section=None)
+                                     order=0)
 
         section.objects.create(name = "London to Dover",
                                  order = 1,
@@ -58,7 +55,7 @@ class sectionPlaceTestCase(TestCase):
         englandSection = section.objects.get(name="London to Dover")
 
         rochester = place.objects.get(name="Rochester")
-        rochester.section = englandSection
+        rochester.section.add(englandSection)
         rochester.save()
 
         newRochester = place.objects.get(name="Rochester")
@@ -79,34 +76,12 @@ class sectionPlaceTestCase(TestCase):
         testEnglandSection = section.objects.get(name = "London to Dover")
         assert testEnglandSection.startPlace.name == "London"
 
-    def test_assignFirst(self):
-        print("6Testing order assigning to London.")
-        englandSection = section.objects.get(name="London to Dover2")
-        print("Section start: {}".format(englandSection))
-
-        london = place.objects.get(name="London")
-        london.section = englandSection
-        london.save()
-
-        newLondon = place.objects.get(name="London")
-
-        assert (newLondon.order == 0.0)
-
-    def test_assignLast(self):
-        print("7Testing order assigning to Dover.")
-        dover = place.objects.get(name = "Dover")
-        englandSection = section.objects.get(name="London to Dover2")
-        dover.section = englandSection
-        dover.save()
-        newDover = place.objects.get(name="Dover")
-        assert (newDover.order == 1.0)
-
     def test_assignInter1(self):
         print("8Testing order assigning to Rochester.")
         englandSection = section.objects.get(name="London to Dover2")
 
         rochester = place.objects.get(name="Rochester")
-        rochester.section = englandSection
+        rochester.section.add(englandSection)
         rochester.save()
 
         newRochester = place.objects.get(name="Rochester")

@@ -2,10 +2,12 @@ from django.db import models
 import datetime
 from .coords import haversine
 from colorful.fields import RGBColorField
+from django.forms import ModelForm
 # Create your models here
 
 class type(models.Model):
     name = models.CharField(max_length=20)
+    color = RGBColorField(default = '#004080')
 
     def __str__(self):
         return self.name
@@ -13,8 +15,6 @@ class type(models.Model):
 
 class section(models.Model):
     name = models.CharField(max_length=200, default = "unnamed")
-    order = models.IntegerField()
-    color = RGBColorField()
 
     startPlace = models.ForeignKey('place',
                                    related_name="start",
@@ -34,26 +34,36 @@ class section(models.Model):
     def __str__(self):
         return str(self.name) + ": " + str(self.order)
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        save_startEnd(self.startPlace, self.endPlace, self)
+
 class place(models.Model):
     name = models.CharField(max_length=200, default = "nowhere")
-    lat = models.FloatField()
-    lon = models.FloatField()
+    lat = models.FloatField(null=True)
+    lon = models.FloatField(null=True)
     order = models.FloatField()
 
-    section = models.ForeignKey(section,
-                                on_delete= models.SET_NULL,
-                                null= True)
+    section = models.ManyToManyField(section,blank = True)
 
     def __str__(self):
         return self.name + ": " + str(self.lat) + ", " + str(self.lon)
 
     def save(self, *args, **kwargs):
-        if self.section:
-            order_set = get_order(self.lat,self.lon,self.section.id, self.id)
-            self.order = order_set
-        super().save(*args,**kwargs)
+        # Tries to get a sample section, might not work as section might not
+        # be assigned yet
+        try:
+            selfSec = self.section.get(pk=1)
+            if not (selfSec.startPlace == self or selfSec.endPlace == self):
+                print("Assigning order...")
+                order_set = get_order(self.lat,self.lon,selfSec.id, self.id)
+                print ("order set: " + str(order_set))
+                self.order = order_set
+            super().save(*args, **kwargs)
+        except:
+            super().save(*args,**kwargs)
 
-#    def sort_values(self):
+
 
 class subSection(models.Model):
     name = models.CharField(max_length=200, default="unnamed")
@@ -83,16 +93,15 @@ class subSection(models.Model):
 class meetUp(models.Model):
     name = models.CharField(max_length=200)
     info = models.TextField(max_length=1000)
+    showChoices = (("True" , "Show"),
+                   ("False", "Hide")
+    )
+
+    show = models.CharField(max_length=20, default='True', choices=showChoices)
 
     place = models.ForeignKey(place,
                               related_name= "meetUpPlace",
-                              on_delete= models.SET_NULL,
-                              null=True)
-
-    section = models.ForeignKey(section,
-                                related_name="meetUpSection",
-                                on_delete= models.SET_NULL,
-                                null= True)
+                              on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name \
@@ -104,6 +113,16 @@ class pastData(models.Model):
     timeIn = models.DateTimeField(auto_now= True)
     lat = models.FloatField(default=0)
     lon = models.FloatField(default=0)
+    deltaT = models.FloatField(default=0)
+    distanceAB = models.FloatField(default = 0, null=True)
+    distanceGoogle = models.FloatField(default=0, null=True)
+    speed = models.FloatField(default = 0, null=True)
+    movingTime = models.IntegerField(default=0, null=True)
+    totalMovingTime = models.IntegerField(default=0, null=True)
+    totalDistance = models.FloatField(default=0,null=True)
+
+    def __str__(self):
+        return str(self.lat) + "," + str(self.lon) + " : " + str(self.time)
 
 '''
 class extrapolated_data(models.Model):
@@ -120,16 +139,11 @@ class post(models.Model):
     time = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=200)
     content = models.TextField(max_length=10000)
+    show = models.BooleanField(default=True)
 
     place = models.ForeignKey(place,
                               related_name= "postPlace",
-                              on_delete=models.SET_NULL,
-                              null=True)
-
-    section = models.ForeignKey(section,
-                                related_name= "postSection",
-                                on_delete=models.SET_NULL,
-                                null=True)
+                              on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -158,6 +172,12 @@ def add_data(data_in):
         x = pastData(time = datetime.datetime.now(), lat = row[0],
                      lon = row[1])
         x.save()
+
+def save_startEnd(start,end,sec):
+    start.section.add(sec)
+    end.section.add(sec)
+    start.save()
+    end.save()
 
 def get_order(lat,lon,section_id, selfId):
     '''

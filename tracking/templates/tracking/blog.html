@@ -1,0 +1,25 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var prev = 1;//{{ prev | safe }};
+        var next = 1;//{{ next | safe }};
+    </script>
+</head>
+<body>
+    <h1>{{ post.title }}</h1><br/>
+    <img src = "{{ post.image.url }}"><br/>
+    <p> {{post.content}} </p>
+    <script>
+        if (prev !== 0){
+            //document.write('<h3><a href="?pk=' + prev + '">Previous</a></h3><br/>')
+            }
+        if (next !== 0){
+            //document.write('<h3><a href="?pk=' + next + '">Next</a></h3><br/>')
+            }
+    </script>
+</body>
+</html>
