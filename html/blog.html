@@ -1,18 +1,41 @@
-{% load staticfiles %}
+<!--{% load staticfiles %}-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="styles.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src= "main.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Fira+Sans" rel="stylesheet">
+
     <script>
         var prev = 1;//{{ prev | safe }};
         var next = 1;//{{ next | safe }};
     </script>
 </head>
 <body>
+<!--
     <h1>{{ post.title }}</h1><br/>
     <img src = "{{ post.image.url }}"><br/>
     <p> {{post.content}} </p>
+-->
+    <div class="blog-wrapper">
+
+        <div class="blog-head">
+            <img class="blog-page-img" src="images/004_mJ4Wfp4.jpg">
+            <div class="blog-info">
+                <h1 class="post-title">My Ass is Sore</h1>
+                <p> 25th July 2018</p>
+                <p> White Cliffs of Dover</p>
+            </div>
+        </div>
+        <p class="blog-content">Hello I'm Farha and jesus fuck it's really hard cycling up hill all the time. The white cliffs of Dover are not even white any more. This is a stock image. I'm so sorry everybody. I can't wait until I'm off this island. Etc.</p>
+    </div>
+
+
     <script>
         if (prev !== 0){
             //document.write('<h3><a href="?pk=' + prev + '">Previous</a></h3><br/>')
@@ -20,6 +43,8 @@
         if (next !== 0){
             //document.write('<h3><a href="?pk=' + next + '">Next</a></h3><br/>')
             }
+        
+         //toggle or add ".hidden" class to hide things
     </script>
 </body>
 </html>

@@ -94,6 +94,12 @@ function getStyle(){
 
             {
               featureType: 'road',
+              elementType: 'labels.icon',
+              stylers: [{visibility: 'off'}]
+            },
+
+            {
+              featureType: 'road',
               elementType: 'labels.text.fill',
               stylers: [{color: '#9ca5b3'}]
             },
