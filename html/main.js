@@ -17,11 +17,11 @@ $(document).ready(function () {
 
   //makes the fucking title disappear when I want it to
 
-  var windowYPos = window.scrollY;
+  
 
-  $("li").click(function(event) {
-    $("h1.title").addClass("hidden");
-  });
+  // $("li").click(function(event) {
+  //   $("h1.title").addClass("hidden");
+  // });
 
   // makes the back to map button appear
 	
@@ -34,5 +34,11 @@ $(document).ready(function () {
 
             }
      });
+
+  //for the contact abs box
+
+  $("li.contact-button").click(function() {
+    $(".contact-box").toggleClass("show");
+  });
   
 });
