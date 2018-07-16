@@ -125,12 +125,10 @@ function initMap1() {
         zoom: 4
     });
     
-    console.log("initialising section map:")
     sectionMap = new google.maps.Map(document.getElementById('sectionMap'), {
         center: startCoord,
         zoom: 10
     });
-    console.log("initDashMap version:1.1")
     var input = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -144,7 +142,6 @@ function initMap1() {
             position: startCoord
         }))
     }
-    console.log("1 everything ok...")
     
     // Search box function:
 
@@ -160,8 +157,6 @@ function initMap1() {
         marker.setMap(null);
         });
         markers = [];
-
-        // For each place, get the icon, name and location.
         
         var bounds = new google.maps.LatLngBounds();
         places.forEach(function(place) {
@@ -177,8 +172,7 @@ function initMap1() {
                 title: place.name,
                 position: place.geometry.location
             }));
-
-            console.log("everything ok...")
+            
             markers[markers.length-1]["index"] = markers.length-1
 
             markers[markers.length-1].addListener('click', function(){
@@ -336,7 +330,6 @@ function displayRoute(origin, destination, service, display) {
     });
 }
     
-
 function computeTotalDistance(result) {
     var total = 0;
     var myroute = result.routes[0];
@@ -347,32 +340,4 @@ function computeTotalDistance(result) {
     document.getElementById('total').innerHTML = total + ' km';
 }
 
-function initDropdown(){
-    var post_names = Object.keys(posts);
-    console.log(post_names)
-    var option_list = [];
-    for (i=0; i<post_names.length; i++){
-        name = post_names[i];
-        console.log(name);
-        option_list.push(document.createElement("option"));
-        option_list[option_list.length-1].value = name;
-        option_list[option_list.length-1].innerHTML = name;
-        document.getElementById("post names").appendChild(option_list[option_list.length-1]);
-    }
-}
 
-function auto_fill(){
-    name = document.getElementById("post names").value;
-    console.log("name from dropdown:");
-    console.log(name);
-    coord = posts[name]["coord"];
-    
-    document.getElementById('placePk').value = posts[name]["placePk"];
-    document.getElementById('name').value = posts[name]["place_name"];
-    document.getElementById('lat').value = coord["lat"];
-    document.getElementById('lng').value = coord["lng"];
-
-    document.getElementById('postPk').value = posts[name]["postPk"];
-    document.getElementById('post_title').value = name;
-    quill.root.innerHTML = posts[name]["content"];
-}
