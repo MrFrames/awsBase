@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>PostList</title>
+	<meta charset="utf-8">
+    <title>Post List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src= "main.js"></script>
+    <script src="initMap.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Fira+Sans" rel="stylesheet">
 </head>
 <body>
-    <h1>all posts:</h1>
+    <h1>Post History</h1>
     {% for post in all_posts %}
     <a href="/dashboard/?postPk={{ post.pk }}">{{ post.title }}</a><br/>
     {% endfor %}

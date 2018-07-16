@@ -40,5 +40,9 @@ $(document).ready(function () {
   $("li.contact-button").click(function() {
     $(".contact-box").toggleClass("show");
   });
+
+   $(".exit-button").click(function() { //later make this more versatile; anything that needs to appear/disappear when you click it should just be in this
+    $(".contact-box").toggleClass("show");
+  });
   
 });

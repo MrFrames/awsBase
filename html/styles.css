@@ -7,7 +7,6 @@
 - style existing posts list
 - add text only thumb in blog previews
 - style the info windows
-- make the 'contact' just a prominent abs box showing her email and instagram
 
 */
 
@@ -205,14 +204,17 @@ img.tile-img {
     text-align: center;
 }
 
+
+                /*CONTACT BOX THINGY*/
+
 .contact-box {
-    position: absolute;
-    z-index: 2;
+    position: fixed;
+    z-index: 3;
     background: rgba(255, 255, 255, 0.90);
     margin: 0 auto;
     width: 50%;
     left: 25%;
-    top: 0;
+    top: 25%;
     border: 10px double #58310d;
     visibility: hidden;
 }
@@ -228,6 +230,11 @@ img.tile-img {
 
 .show {
     visibility: visible;
+}
+
+.contact-button,
+.exit-button {
+    cursor: pointer;
 }
 
 
@@ -266,7 +273,16 @@ img.blog-page-img {
     height: 100%;
 }
 
+.button-wrapper {
+    display: flex;
+    margin-top: 5em;
+    justify-content: space-between;
+}
 
+.button-wrapper p {
+    font-family: 'Abril Fatface', cursive;
+    font-size: 1.7em;
+}
 
 
 
@@ -277,7 +293,9 @@ a {
 	text-decoration: none;
 }
 
-a:hover {
+a:hover,
+.contact-button:hover,
+.exit-button:hover {
 	text-decoration: underline;
 }
 
