@@ -126,6 +126,8 @@
           var map;
           var sectionMap;
           markers =[];
+      </script>
+      <script>
           console.log("Dashboard version 1.4")
           $(document).ready(function(){
               $(".tabs").on("click", "li", function(){
@@ -171,7 +173,7 @@
             <h1>and the total distance you have cycled uphill is {{ elevation }}</h1>
             <h1><a href="/logout/">Logout!</a> </h1>
         </div>
-        <div id="tab-two-content-box">
+        <div id="tab-two-content-box" class="hide">
             <!-- 
                 This is the post form:
             -->
@@ -232,14 +234,16 @@
             </div>
             <textarea name="post_content" hidden id="post_content" form="post_form" class="blogPostContentInput" rows ="20" cols ="100">This is a blog post</textarea><br>
             <input type="submit" value="Save post" form="post_form" id="save_post"><br>
-                
+                <script>
+                    var quill = new Quill('#editor', {
+                        theme: 'snow'
+                    });
+                </script>
                 <script>
                     initDropdown();
                     $('#tab-two-content-box').addClass("hide");
                     $('#tab-three-content-box').addClass("hide");
-                    var quill = new Quill('#editor', {
-                        theme: 'snow'
-                    });
+                    
                     document.getElementById("save_post").addEventListener("click",function(){
                         document.getElementById("post_content").innerHTML = (quill.root.innerHTML);
                     });
@@ -265,7 +269,6 @@
                     }
                     autoFillForm();
                 </script>
-            <h1><a href="/edit_post">Edit existing post</a></h1>
         </div>
 
         <div id="tab-three-content-box" class="hide">

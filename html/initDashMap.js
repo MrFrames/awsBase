@@ -1,4 +1,122 @@
-function initMap() {
+function initMap(){
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 48.8587741, lng: 2.2069771},
+        zoom: 6,
+        styles: getStyle()
+    });
+    sectionMap = new google.maps.Map(document.getElementById('sectionMap'), {
+        center: {lat: 48.8587741, lng: 2.2069771},
+        zoom: 12,
+        styles: getStyle()
+    });
+}
+
+function getStyle(){
+    return[
+            {elementType: 'geometry', 
+             stylers: [{color: '#fafae3'}]},
+            {elementType: 'labels.text.stroke', 
+             stylers: [{color: '#000000'},
+                      {strokeWeight: '1'},
+                      {visibility: 'off'}]},
+            
+            {elementType: 'labels.text.fill', 
+             stylers: [{color: '#58310d'},
+                      {fontWeight: '400'}]},
+            {
+              featureType: 'administrative.locality',
+              elementType: 'labels.text.fill',
+              stylers: [{/*fontFamily: 'Fira Sans'*/},
+                        {color: '#58310d'}]
+            },
+            
+            {
+              featureType: 'administrative.locality',
+              elementType: 'labels.text',
+              stylers: [{fontFamily: 'Fira Sans'},
+                        {color: '#58310d'},
+                       {fontWeight: '900'}]
+            },
+            
+            {
+              featureType: 'poi',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#58310d'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'geometry',
+              stylers: [{color: '#efedd0'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#9a6b83'}]
+            },
+
+            {
+              featureType: 'road',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#9ca5b3'}]
+            },
+            {
+              featureType: 'road.local',
+              elementType: 'geometry',
+              stylers: [{color: '#e3e0bd'},
+                       {weight: 1}]
+            },
+            {
+              featureType: 'road.arterial',
+              elementType: 'geometry',
+              stylers: [{color: '#e3e0bd'},
+                        {weight: 1}
+                       /*{visibility: 'off'}*/]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry',
+              stylers: [{color: '#c3bc89'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#c3bc89'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#f3d19c'}]
+            },
+            {
+              featureType: 'transit',
+              elementType: 'geometry',
+              stylers: [{color: '#2f3948'},
+                       {visibility: 'off'}]
+            },
+            {
+              featureType: 'transit.station',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{color: '#cac392'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#cac392'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.stroke',
+              stylers: [{color: '#cac392'}]
+            }
+          ];
+}
+
+function initMap1() {
     if (postQ === "1"){
         myLatLng = {lat: parseFloat(placeLat), lng: parseFloat(placeLng)};
     }
