@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'django_cron',
     'tracking.apps.TrackingConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -53,6 +54,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'awsBase.urls'
+
+CRON_CLASSES = [
+    "tracking.cron.MyCronJob"
+]
 
 TEMPLATES = [
     {
@@ -169,3 +174,9 @@ CSRF_COOKIE_SECURE = True
 
 X_FRAME_OPTIONS = "Deny"
 '''
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+EMAIL_USE_TLS = False

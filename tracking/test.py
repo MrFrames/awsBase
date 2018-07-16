@@ -87,3 +87,5 @@ class sectionPlaceTestCase(TestCase):
         newRochester = place.objects.get(name="Rochester")
         print ("Rochester order: ".format(newRochester.order))
         assert (newRochester.order == 0.5)
+
+

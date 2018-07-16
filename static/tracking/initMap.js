@@ -6,7 +6,7 @@ function initMap() {
         styles: getStyle()
     });
 
-    console.log("version 2.9")
+    console.log("version2.4")
     
     var latlng = []
     bounds = new google.maps.LatLngBounds();
@@ -20,7 +20,7 @@ function initMap() {
     addInfoWindows(map,posts,"post");
     addInfoWindows(map,meets,"meetUps");
     
-    requestArray = [];
+    var requestArray = [];
     directionServices = [];
     directionDisplays = [];
     setRoutes(map, requestArray, directionServices, "route", planPlaces);
@@ -35,7 +35,7 @@ function initMap() {
     
     console.log(polySecNames);
     
-    setBounds(planPlaceNames, planPlaces);
+    setBounds(planPlaceNames, map);
 
     map.fitBounds(bounds);
 
@@ -167,10 +167,9 @@ function getPostContent(postObj){
 }
 
 function getMeetupContent(meetUpObj){
-    var output = (meetUp1 + String(meetUpObj[2]) + meetUp2)
-    console.log("output")
-    console.log(output)
-    return(output)
+    return('<h1>' + String(meetUpObj[2]) + '</h1>' +
+           '<h2><a href="mailto:farha.beee@gmail.com">Email me to meet up!<br/>' +
+           'farha.beee@gmail.com</a></h2>')
 }
 
 function getMeetUpPin(){
@@ -240,11 +239,9 @@ function setPolys(map){
     }
 }
 
-function setBounds(sectionNames, sections){
+function setBounds(sectionNames){
     for (i = 0; i < sectionNames.length; i++){
-        bounds.extend(sections[sectionNames[i]]["end"])
-        bounds.extend(sections[sectionNames[i]]["start"])
-        var poly = sections[sectionNames[i]]["places"];
+        var poly = secPlaces[sectionNames[i]]["places"];
         for (x=0; x < poly.length; x++){
             bounds.extend(poly[x]);
         }
@@ -286,20 +283,10 @@ function addInfoWindows(map,objs,type){
         
         objs[x].info = new google.maps.InfoWindow({
             content: contentString,
-            maxWidth: 400,
-            clicked: false
+            maxWidth: 300
         });
         objs[x].addListener('click', function(){
             this.info.open(this.get('map'),this);
-            if (!this.clicked){
-                var quill = new Quill("#meetEditor", {theme: "snow"});
-                document.getElementById("send_email").addEventListener("click",function(){
-                    document.getElementById("email_content").innerHTML = (quill.root.innerHTML);
-                });
-                this["clicked"] = true;
-            };
-            
-            
         });
     };
     
@@ -358,20 +345,8 @@ function processRequest(requestArray,directionServices, routeType){
                 
                 console.log(status);
                 if (status === google.maps.DirectionsStatus.OK){
-                    directionDisplays.push(new google.maps.DirectionsRenderer({suppressMarkers: true, polylineOptions: {strokeColor:"brown"},preserveViewport: true}));
+                    directionDisplays.push(new google.maps.DirectionsRenderer({suppressMarkers: true, polylineOptions: {strokeColor:"brown"}}));
                     directionDisplays[directionDisplays.length-1].setDirections(result);
-                    
-                    //console.log("setting info windows:")
-                    
-                    
-                    //planInfoWindows.push(new google.maps.InfoWindow())
-                    //planInfoWindows[planInfoWindows.length-1].setContent(getMeetupContent(""));
-                    google.maps.event.addListener(directionDisplays[directionDisplays.length-1],'click',function(event){
-                        console.log("route clicked");
-                        //latlng = {lat: event.latLng.lat(), lng: event.latLng.lng()};
-                        //planInfoWindows[planInfoWindows.length-1].setPosition(latlng);;
-                        //planInfoWindows[planInfoWindows.length-1].open(map);
-                    });
                     directionDisplays[directionDisplays.length-1].setMap(map);
                     //console.log("directionLength" + directionDisplays.length);
                 }
@@ -388,11 +363,13 @@ function processRequest(requestArray,directionServices, routeType){
                 console.log(status);
                 // callback function sets route on maps
                 if (status === google.maps.DirectionsStatus.OK){
-                    histDirectionDisplays.push(new google.maps.DirectionsRenderer({suppressMarkers: true, polylineOptions: {strokeColor:"black"}, preserveViewport: true}));
+                    histDirectionDisplays.push(new google.maps.DirectionsRenderer({suppressMarkers: true, polylineOptions: {strokeColor:"black"}}));
                     histDirectionDisplays[histDirectionDisplays.length-1].setDirections(result);
                     histDirectionDisplays[histDirectionDisplays.length-1].setMap(map);
-                    //if (histDirectionDisplays.length === requestArray.length){
-                    //}
+                    if (histDirectionDisplays.length === directionServices.length){
+                        map.fitBounds(bounds);
+                        console.log("Fitting Bounds!!!")
+                    }
                 }
             } else {
                 setTimeout(function(){

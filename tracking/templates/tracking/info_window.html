@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <title>Email status</title>
+</head>
+<body>
+    <div class="infoWindow" style="width:400px;height: 300px;">
+        <div class="form">
+            <form action="/email_status/" id="#form" method="post">
+                <div class="first_line" style="display: flex;justify-content: space-between;">
+                    <p1 class="name_prompt">Your name:</p1>
+                    <input type="text" name="name" id="name" class="name_in" pattern="^.{4,100}" style="width:270px;"/>
+                </div><br/>
+                <input typw="text" hidden name="section" id="section"/>
+                <textarea name="post_content" hidden id="email_content" form="#form" class="email_content"  rows ="10" columns ="10"></textarea>
+            </form>
+        </div>
+        <div id="#meetEditor" style="height:200">
+            <p>Hi Farha!</p><br/>
+            <p>I'd like to join you!</p>
+        </div><br/>
+        <input  type="submit" value="Send email" form="#form" id="send_email" style="margin-left: auto;display: block;"/>
+        <script>
+            var quill = new Quill('#meetEditor', {
+            theme: 'snow'
+            });
+            document.getElementById("send_email").addEventListener("click",function(){
+                document.getElementById("email_content").innerHTML = (quill.root.innerHTML);
+            });
+        </script>
+    </div>
+
+</body>
+</html>

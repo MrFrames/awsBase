@@ -3,6 +3,10 @@ import datetime
 from .coords import haversine
 from colorful.fields import RGBColorField
 from django.forms import ModelForm
+import requests
+import re
+import datetime
+
 # Create your models here
 
 class type(models.Model):
@@ -11,7 +15,6 @@ class type(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class section(models.Model):
     name = models.CharField(max_length=200, default = "unnamed")
@@ -32,7 +35,7 @@ class section(models.Model):
                                  null=True)
 
     def __str__(self):
-        return str(self.name) + ": " + str(self.order)
+        return str(self.name)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -53,7 +56,7 @@ class place(models.Model):
         # Tries to get a sample section, might not work as section might not
         # be assigned yet
         try:
-            selfSec = self.section.get(pk=1)
+            selfSec = list(self.section.objects.all())[0]
             if not (selfSec.startPlace == self or selfSec.endPlace == self):
                 print("Assigning order...")
                 order_set = get_order(self.lat,self.lon,selfSec.id, self.id)
@@ -63,48 +66,16 @@ class place(models.Model):
         except:
             super().save(*args,**kwargs)
 
-
-
-class subSection(models.Model):
-    name = models.CharField(max_length=200, default="unnamed")
-    order = models.IntegerField()
-
-    section = models.ForeignKey(section,
-                                related_name="insideSection",
-                                on_delete=models.SET_NULL,
-                                null = True)
-
-    type = models.ForeignKey(type,
-                             related_name="subTransportType",
-                             on_delete=models.SET_NULL,
-                             null=True)
-
-    startPlace = models.ForeignKey(place,
-                                   related_name="subSectionStart",
-                                   on_delete=models.SET_NULL, null=True)
-
-    endPlace = models.ForeignKey(place,
-                                 related_name="subSectionEnd",
-                                 on_delete=models.SET_NULL, null=True)
-
-    def __str__(self):
-        return str(self.name) + ": " + str(self.order)
-
 class meetUp(models.Model):
     name = models.CharField(max_length=200)
     info = models.TextField(max_length=1000)
-    showChoices = (("True" , "Show"),
-                   ("False", "Hide")
-    )
-
-    show = models.CharField(max_length=20, default='True', choices=showChoices)
 
     place = models.ForeignKey(place,
                               related_name= "meetUpPlace",
                               on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name \
+        return self.name
 
     #+ ": @" + self.place.name + ", in section: " + self.section.name
 
@@ -113,6 +84,7 @@ class pastData(models.Model):
     timeIn = models.DateTimeField(auto_now= True)
     lat = models.FloatField(default=0)
     lon = models.FloatField(default=0)
+    elevation = models.FloatField(default = 0)
     deltaT = models.FloatField(default=0)
     distanceAB = models.FloatField(default = 0, null=True)
     distanceGoogle = models.FloatField(default=0, null=True)
@@ -120,9 +92,19 @@ class pastData(models.Model):
     movingTime = models.IntegerField(default=0, null=True)
     totalMovingTime = models.IntegerField(default=0, null=True)
     totalDistance = models.FloatField(default=0,null=True)
+    totalElevation = models.FloatField(default=0, null=True)
+
+    lastGetTime = models.DateTimeField(default="2018-06-28T12:00:00-0000")
 
     def __str__(self):
         return str(self.lat) + "," + str(self.lon) + " : " + str(self.time)
+
+    def get_pastDay(self):
+        today = datetime.now().date()
+        tomorrow = today + datetime.timedelta(1)
+        today_start = datetime.combine(today, datetime.time())
+        today_end = datetime.combine(tomorrow, datetime.time())
+        return self.filter(start__lte=today_end, end__gte=today_start)
 
 '''
 class extrapolated_data(models.Model):
@@ -149,6 +131,16 @@ class post(models.Model):
         return self.title
 
         #+ ":" + , in section: " + self.section.name
+
+class resolved_coord(models.Model):
+    section = models.IntegerField()
+    lat = models.FloatField()
+    lon = models.FloatField()
+
+class capped_resolved_coord(models.Model):
+    section = models.IntegerField()
+    lat = models.FloatField()
+    lon = models.FloatField()
 
 def get_past_data():
     '''

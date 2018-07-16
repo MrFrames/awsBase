@@ -19,10 +19,12 @@ from django.conf.urls import url,include
 from .views import *
 
 urlpatterns = [
-    url(r'^tracking/$',comb, name = "Comb"),
+    url(r'^tracking/$',capped, name = "home"),
+    url(r'^tracking/fandf$', not_capped, name="friendsandfamily"),
     url(r'^tracking/input/$',input, name="input"),
     url(r'^tracking/extrapolate_data/$',ext,name='ext'),
     url(r'^blog/$', postList , name="blog"),
     url(r'^dashboard/$', dash, name="dash"),
-    url(r'^edit_post/$', postView, name="post_list"),
+    url(r'^proc_data/(?P<hours>[0-9]+)$', processData, name="process_data"),
+    url(r'^email_status/$', email, name="email"),
 ]

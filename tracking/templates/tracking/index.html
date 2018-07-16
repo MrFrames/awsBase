@@ -1,80 +1,311 @@
 {% load staticfiles %}
 
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Json Test page</title>
-    <link rel = "stylesheet" href = "{% static 'tracking/styles.CSS' %}">
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset= "utf-8">
-    <style>
-        #map {
-            width: 100%;
-            height: 700px;
-            margin: 0 auto 5em auto;
-        }
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
+    <meta charset="utf-8">
+    <title>Brown Girl On A Bike</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src='{% static "tracking/main.js" %}'></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <link rel="stylesheet" href='{% static "tracking/styles.css" %}'>
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Fira+Sans" rel="stylesheet">
+	<script>
+		var map;
+        var planPlaces = {{ sections_json | safe }};
+        var planPlaceNames = Object.keys(planPlaces);
+        var planInfoWindows = [];
+        
+        var polySecPlaces = {{ poly_sectionsJson | safe }};
+        var polySecNames = Object.keys(polySecPlaces);
+        
+        var hist_sections = {{ hist_section_array | safe }};
+        
+        var allPosts = {{ all_posts | safe}};
+        var allMeetUps = {{ all_meetUps | safe }};
+        
+        var bounds = [];
+        
+        var postIconPath = '{% static "tracking/map-marker-2-32 (1).png" %}';
+        var meetIconPath = '{% static "tracking/map-marker-2-32.png" %}';
+        var meets = [];
+        var posts = [];
+        
+        var csrf = "{% csrf_token %}"
+        console.log(csrf)
+        
+        var meetUp1 = ('<div class="infoWindow" style="width:300px;height: 300px;">' + 
+                    '<div class="form">' +
+                    '<form action="/email_status/" id="meetform" method="post">' +
+                    csrf +
+                    '<div class="first_line" style="display: flex;justify-content: space-between;">' +
+                    '<p1 class="name_prompt">Your name:</p1>' +
+                    '<input type="text" name="name" id="name" class="name_in" pattern="^.{4,100}" style="width:270px;"/>' +
+                    '</div><br/>' +
+                    '<input typw="text" hidden name="section" id="section" value="')
+        var meetUp2 = ('"/>' +
+                    '<textarea name="email_content" hidden id="email_content" form="meetform" class="email_content"  rows ="10" columns ="10"></textarea>' +
+                    '</form>' +
+                    '</div>' +
+                    '<div id="meetEditor" style="height:150px;">' +
+                    '<p>Hi Farha!</p><br/>' +
+                    '<p>I would like to join you!</p>' +
+                    '</div><br/>' +
+                    '<input  type="submit" value="Send message" form="meetform" id="send_email" style="margin-left: auto;display: block;"/>')
+        
+        
+	</script>
+    <script src='{% static "tracking/initMap.js" %}'></script>
 </head>
 <body>
-    <div id="map"></div>
-        <script
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXPl8EoO-pH5vKxjnfuVRGrcB8PjI_8w4&callback=initMap" async defer></script>
-    <div id="jsonTest">
-        <script>
-            var map;
-            var secPlaces = {{ section_json | safe }};
-            var allPosts = {{ posts_raw | safe }}
-            var allMeetUps = {{ meetUps_raw | safe }}
-            var sectionNames = Object.keys(secPlaces);
-            var forLimit = sectionNames.length;
-
-            function initMap() {
-                var polygons = [];
-                map = new google.maps.Map(document.getElementById('map'),{
-                    center: {lat: 51.5287718, lng: -0.2416808},
-                    zoom: 9
-                });
-
-                /*
-                Below loops through the sections, then each place in the
-                section, adding it's lat/lon coords to the polys array.
-                */
-                for (i = 0; i < forLimit; i++){
-                places = secPlaces[sectionNames[i]]["places"];
-                poly = [];
-                for (x=0; x < places.length; x++){
-                    poly.push({lat:places[x][1],lng:places[x][2]});
-                    }
-
-                /*
-                Below pushes a google.maps.Polyline object to
-                the polygons array for each section, using the poly array as
-                the path. Then the .setMap method is used to apply the last
-                (current) Polyline object in the Polygons array to the map.
-                */
-
-                polygons.push(new google.maps.Polyline({
-                    path: poly,
-                    geodesic: false,
-                    strokeColor: secPlaces[sectionNames[i]]["color"],
-                    strokeOpacity: 0.45,
-                    strokeWeight: 3
-                    })
-                );
-                polygons[polygons.length -1].setMap(map);
-            }
-
-        }
-            document.write("Map working.")
-        </script>
-        <h1>Sections:</h1>
-
+	<div id="top"></div>
+    <div class="header">
+        <h1 class="title">Brown Girl On A Bike</h1>
+        <div class="nav">
+            <ul>
+                <li><a href="#what">What is this?</a></li>
+                <li><a href="#visit">Pay Me A Visit</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#support">Supporters</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
     </div>
+	
+	<h3 class="back-to-map"><a href="#top">^^^<br>BACK TO MAP</a></h3>
+	
+   <div class="content">
+	   <!--<p class="intro">Hello, I'm Farha and I'm cycling around the WHOLE WORLD. You can see my whereabouts on this map, as well as where I've been and where I am going.</p>
+-->
+	   <div id="googleMap"></div>
+	   	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj6i75TUGUFEf-qaexR0kfW60w-G2XmEs&callback=initMap" ></script>
+
+		<!-- API KEY: 
+	AIzaSyDj6i75TUGUFEf-qaexR0kfW60w-G2XmEs
+	-->
+
+
+	
+		    <div class="section" id="what">
+				<h2 class="sec-tit">What it means to be a brown girl on a bike</h2>
+<p>
+What it means to be a brown girl on a bike
+back in 2016 when i started to tell people i was going to quit my job, leave
+london and cycle somewhere for a year, i think most people didn’t believe me.
+when in 2018, i actually left my job, left my house, serviced my bicycle and
+started making movements, most people began to ask one question: why?
+my casual answer: why not?
+this was a lie.
+when explaining the adventure to one friend, she leaned into me, wide-eyed,
+and confidentially spoke, ‘you know, you don’t have to do this.’
+the thing is i do.<br/><br/>
+
+on thursday 5th july, i’m going to start cycling from east london to south Africa,
+on a bike made by a friend (i’m the trusting sort). i will take a tent, sleeping
+bag, some clothes, lots of padded underwear and a lifetime supply of
+mosquito repellant. you can find the current projected route here. but i must
+warn you, it might all change. a week ago - the plan was to cycle the silk road
+in central asia. who knows what the plan will be in three days when i actually
+leave. i’ve talked about it for about 2 years but it’s all come together in the
+last two weeks. it was going to be a 3 month jolly. it’s become a 30 month
+adventure. it’s all slightly surreal.<br/><br/>
+
+this decision is definitely rooted in privilege and luxury. but at the same time, it
+was one borne out of necessity.
+all my life I have had a series of labels allocated to me by other people. some
+labels applied at different times, in different sets. some overlapped.
+brown, woman, muslim, immigrant, bme, working class, asian, paki, graduate,
+colonised, backward, inferior, oppressed, poc, minority, oppressed woman,
+oppressed muslim, oppressed muslim woman… you get the idea.
+so few words to describe the entirety of me.
+and for a really long time, these words from foreign tongues contained me.
+enabled me to function in this white unequal unjust society, albeit only as the
+other. my spirit regurgitated and categorised within the confines of an
+occupier language by people who didn’t look like me and some people who
+did. At times, the labels offended and put me in my place. at other times, they
+were badges of pride, reclaimed.<br/><br/>
+I studied and did well at school. i consumed the culture, identifying with
+‘babysitter club’ books and ‘my so called life’ episodes. because I didn’t feel
+intelligent in dominant white spaces i began to speak a certain way, a way
+that my sisters and brothers would say ‘it’s farha being fa-fa-fa’, a kind way of
+telling me I was being a patronising ****. because I didn’t feel pretty enough
+against the white beauty standard, i allowed myself to be exoticised, engaging
+with my culture as performance to entertain masses, replicating the colonial
+exhibitions where the spoils of the ‘empire’ were put on display. the colonised
+only seeing their worth through the coloniser’s prism. and they call it history.
+because i didn’t understand for too long, i let* the inferiority and the
+imbalances take deep root, disturbing the rhythms of my body, the way i
+thought, the way i moved, the way i talked as i self-censored and tried to take
+up as little space as possible.<br/><br/>
+    
+the realisation is heavy. it starts off slow and cautious. you stop ignoring that
+feeling you usually try and push down. you start to question. then something
+triggers and it comes thick and fast like smoke. like the moment a spark of
+fire takes hold of something and consumes it, ravaging it until its an empty
+burnt out shell. or perhaps it is better likened to a snake bite where the venom
+spreads through the blood until every limb, muscle and ligament is infected
+and paralysed.
+the realisation that it is not reversible is painful. you see, these wounds run
+deep, weaved into the fabric of our skins and the muscles of our heart.
+interwoven with the synapses of our brain. It requires a lifetime of learning,
+unlearning and careful extraction. It is heavy work. more labour on our brown
+backs.<br/><br/>
+but I tried. I sought solace in new labels - diaspora, intersectionality, activist,
+decolonial i met people thinking what i was thinking. recognition. oh my gosh, i did not
+realise how important it was to have validation for these thoughts in my head.
+the conversations have been important. alternative. a rejection of dominant
+culture. creating art and drawing from our souls to express our complicated
+experiences. quite simply, it has been a lifeline. and as I reflected, read and
+critiqued, i began to understand what happened to me, my parents,
+grandparents, my communities at home here, at home in kashmir, at home in
+south asia, at home in the ‘colonies,’ at home with any people who had been
+subjugated like us. in the rage i felt hope. hope that these spaces of creative
+discourse existed. that we had some space. finally. maybe we could catch our
+breath in these pressure cookers we are confined in. and do the work needed
+so the next generation can be freer. do the work our parents and
+grandparents had no space to do. being brown became paramount. culture as
+survival.<br/><br/>
+fairytales make us believe in happy endings. that once we hit the crescendo of
+conflict in the story, it all comes together, neatly packaged. and we wish for
+this to be true. so it’s always disappointing when life doesn’t turn out that way.
+whilst i have found solace and comfort in these spaces, i’ve also struggled
+within them. with their narrowing of the narrative. a reduction that replicates
+the constraints of a colonised mind. i’ve begun questioning their rejection of
+the mainstream - is it really because you didn’t want them or because they
+
+didn’t want us? have you started using words and labels as rhetoric to lassoo
+your way into the exclusive spheres of establishment? when i see increased
+programming of this discourse in mainstream complicit institutions, our
+creative radical thought being consumed by increasingly white ‘woke’
+audiences, occupying the seats i am full of questions. why don’t i belong in
+spaces i am supposed to belong in? they took our bodies and minds - are
+they now taking our souls? are we complicit? I am full of questions but no
+energy to find the answers. so here i am. tired, burdened and heavy with a lot
+of pain. unsure what’s next but sure that i can’t work through this in this
+geography anymore. at the scene of the crimes.<br/><br/>
+    
+for my survival, i have to leave. i’m not sure why, somewhere along the way, it
+has become necessary for this body to carry me. an act of defiance perhaps?
+but against who i’m unsure - maybe i’m waging war with my occupied self.
+that brings us here. in a few days, i am going to start cycling to south africa.
+the destination may change, but i think the corny phrase ‘it’s all about the
+journey’ feels appropriate here. to allay family fears and provide an alloy to my
+steely determination, i decided to get a gps with an sos button to track me. as
+well as keeping me safer, i’m going to have some fun with this technology.
+at the top of this page you can see a map that is sparkling brown, just like me.
+this is not any ordinary map. courtesy of coding magic that goes beyond my
+tech capabilities, this is a map that will be tracking my journeys. every step,
+stop and wee i make, you shall see, watching me like a sting song. let’s get
+intimate online.
+you may have wandered here expecting a travel blog. you may feel this is too
+self indulgent. well, i want to be clear. this is not for you. this is for me.
+*my friend commented on the choice to use the word let. she says I take too
+much responsibility for what happened. After all I had no power and that
+outcome was inevitable as a diaspora. you see,I can’t escape it. even in
+writing it. </p>
+			</div>
+		
+
+
+			<div class="section" id="visit">
+				<h2 class="sec-tit">Pay Me A Visit</h2>
+				 <p>
+
+Be part of the Journey - Come Visit, it’s quite simple really. For a little while, the road will be home. you are invited to come visit my home. this is how:
+remember the map up there (up arrow)?<br/><br/>
+
+-have a little gander and get excited about lines &amp; squiggles that denote my route<br/>
+-decide which bit catches your eye and click<br/>
+-a little box will pop up<br/><br/>
+
+-you will be invited to share all your dreams and ambitions. if this feels a little weird, the dates that       you’d like to come visit a nook of the world will suffice<br/>
+-click again<br/>
+-electronic currents living in your computer will whisk your wee message away through invisible webs levitating in the wind, all the way to me wherever i may be, whispering your words directly into my ear.<br/>
+-my legs &amp; wheels will move in that direction to welcome you &amp; commence
+wandering.<br/><br/>
+
+If this complex communication channel gets all tangled, just email me &amp; I should still get the message. much like a diversity tick box on a job application form, i particularly welcome visits from brown people</p>
+			</div>
+            <a id="blog"></a>
+			 <div class="section">
+				<h2 class="sec-tit">Blog</h2>
+                 <div class="tile-wrapper">
+                     {% for post in 3posts %}
+                     
+                     <a href="{% url 'blog' %}?pk={{ post.pk }}">
+                     <div class="tile">
+                         <div class="blog-img-wrapper">
+                             {% if post.image %}
+                             <img class="tile-img" src="{{ post.image.url }}">
+                             {% endif %}
+                         </div>
+                        <h3 class="blog-title">{{ post.title }}</h3>
+                         <p>{{ post.time|date:"D d M Y" }}</p>
+                     </div>
+                     </a>
+                     {% endfor %}
+			</div>
+	   	
+
+		<a id="support"></a>	
+			<div class="section" id="support">
+				<h2 class="sec-tit">Support</h2>
+				 <p>Supporters
+i’ve seen a few travel blogs that have a supporters page - i got jealous and
+wanted one too. but instead of making a list of logos and companies who give
+out freebies to market expensive and often inaccessible gear, i’ve decided to
+dedicate this one to the humans who have supported me in getting this far
+through their love, good vibes and time
+coders extraordinaire: georgia &amp; ben <br/><br/>
+i came to them with a vision based on aesthetics rather than functionality
+(remember my obsession with the avatar? coming soon!) they just nodded
+their heads, said yes to all my mad thoughts, went away and created this
+beauty. they also sat with me, explained stuff and showed me how things
+would work. and they did all this without patronising a tech-illiterate person
+like me. truly, thank you.<br/><br/>
+dragon squad: ilyass, zahbia and sean. for witnessing first hand my inability to
+change gears without drama and still encouraging me to take on this mad
+adventure. for not batting an eye-lid when i changed my route thousands of
+kilometres off-course 6 days before my departure date. for kitting me out with
+tracking devices, being my bike mechanics and offering general cheerleading
+services. may the squad spirit live on.<br/><br/>
+family: especially sisters sughra, saika, ghausia, adiba and suffiya who may
+roll their eyes when they hear about my latest scheme but who i know are
+proud of me and help me out anyway they can -whether it be borrowing stuff
+or chucking a few quid my way. baji, that poem still rings true so many years
+later - some sisters are very special indeed.<br/><br/>
+kayo: a builder of people. a constant friend. when you tell me i can do
+something, i always believe you. it’s why i think i can be a stand up comedian
+now. for getting me out of the crowd, and challenging me to be brave.<br/><br/>
+reluctant revolutionaries: ammi &amp; aba - my parents, who may not realise it but
+everything i am is because of them. many years ago, they were forced to
+make difficult journeys travelling away from all that they knew. in the 50+
+years on these atlantic shores, they have overcome challenges and made
+sacrifices that have given me the privilege to choose travel as an experience
+rather than having to flee due to economic hardships or physical conflict - a
+reality that so many continue to face today.<br/><br/>
+sarah: my bestie who bears the brunt of my extreme personality. consoles the
+doubt, caresses the fear and counsels in crisis.
+the love is real.<br/><br/>
+womenbuildboats: lindsay &amp; safiyya. there are very few people in the world
+who would be up for building a boat in a south london garden but here are two
+of the finest. it’s been such a magical project, full of chats, warmth and tea. oh
+and so hammering and sawing. looking forward to the launch. </p>
+			</div>
+		
+
+		
+			<div class="section" id="contact">
+				<h2 class="sec-tit">Contact</h2>
+				 <p></p>
+			</div>
+		
+	   
+	</div>
+    </div>
+   
+
 </body>
 </html>
