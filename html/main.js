@@ -1,33 +1,20 @@
 $(document).ready(function () {
-	
+	//this changes the size of the nav bar and hides the title when you scroll down
 	$(window).scroll(function (event) {
             var y = $(this).scrollTop(); //set position from top in pixels
             if (y >= 100) {
                 $('.nav').addClass('scroll-nav');
-            } else if (y>=50) {
-                $('.title').addClass('disappear');
-            } else if (y < 50) {
+            } else {
                 $('.nav').removeClass('scroll-nav');
-				        $('.title').removeClass('disappear');
-                $('.title').removeClass('hidden');
             }
         });
 
 
-
-  //makes the fucking title disappear when I want it to
-
-  
-
-  // $("li").click(function(event) {
-  //   $("h1.title").addClass("hidden");
-  // });
-
-  // makes the back to map button appear
+  // makes the 'back to map' button appear when you scroll down far enough
 	
 	$(window).scroll(function (event) {
             var y = $(this).scrollTop();
-            if (y >= 900) {
+            if (y >= 850) {
                 $('.back-to-map').addClass('appear');
             } else {
 				 $('.back-to-map').removeClass('appear');
@@ -35,7 +22,8 @@ $(document).ready(function () {
             }
      });
 
-  //for the contact abs box
+
+  //for the contact info that pops up when you click 'contact'
 
   $("li.contact-button").click(function() {
     $(".contact-box").toggleClass("show");

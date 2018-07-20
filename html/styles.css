@@ -2,10 +2,7 @@
 
 - style dash
 -- make search bar more prominent
--- add 'publish' check box
--- add 'meetup' check box
-- style existing posts list
-- add text only thumb in blog previews
+-- Style status page
 - style the info windows
 
 */
@@ -27,6 +24,14 @@ body {
     visibility: hidden;
 }
 
+.show { /*use this to show stuff - any stuff*/
+    visibility: visible;
+}
+
+.disappear { /*to FADE stuff out*/
+	opacity: 0;
+}
+
 .header { /*wraps the nav and title*/
     width: 100%;
     text-align: center;
@@ -34,7 +39,7 @@ body {
 	background: white;
 }
 
-:target { /*seleects all anchors */
+:target { /*seleects all anchors and offsets so the nav does not obscure anything */
     display: block;
     position: relative;
     top: -120px;
@@ -73,16 +78,10 @@ h1.title {
     left: 0;
     z-index: 0;
     opacity: 1;
-    height: 100px;
-	transition: all .5s ease;
-	-webkit-transition: all .5s ease;/* Don't disappear SLOWER. Disappear SOONER*/  
+    height: 100px; 
 }
 
-.disappear { /*for the fading out h1 title*/
-	opacity: 0;
-    height: 0;
-	
-}
+
 
 ul {
     list-style: none;
@@ -127,12 +126,6 @@ h3 {
     z-index: 1;
 }
 
-
-p.intro {
-	text-align: center;
-	margin: -10px 0 0 0;
-}
-
 #googleMap {
     width: 100%;
     height: 650px;
@@ -171,7 +164,13 @@ h2.sec-tit {
 	text-align: center;
 }
 
-.section p {
+p.intro-text {
+    width: 60%;
+	margin: 2em auto;
+	text-align: center;
+}
+
+p.section-text {
 	width: 60%;
 	margin: 2em auto;
 	text-align: justify;
@@ -226,10 +225,6 @@ img.tile-img {
 .contact-text-wrapper p {
     font-size: 2em;
     text-align: center; 
-}
-
-.show {
-    visibility: visible;
 }
 
 .contact-button,
