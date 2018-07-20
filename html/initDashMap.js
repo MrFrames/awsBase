@@ -122,12 +122,14 @@ function initMap1() {
     }
     map = new google.maps.Map(document.getElementById('map'), {
         center: startCoord,
-        zoom: 4
+        zoom: 4,
+        styles: getStyles()
     });
     
     sectionMap = new google.maps.Map(document.getElementById('sectionMap'), {
         center: startCoord,
-        zoom: 10
+        zoom: 10,
+        styles: getStyles()
     });
     var input = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);

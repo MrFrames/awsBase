@@ -1,0 +1,21 @@
+Hi Georgia, Here are some notes for all the pages in the html folder:
+
+I've put together some pages to make styling the info windows easier if you still want to do that. You can also find different styles for the quill editor on their website if you are interested.
+
+index.html:
+I think you have everything covered, but what about farhas content? In the version pushed yesterday it still has loreum ipsum.
+
+post_window.html:
+This is just the post info_window that pops up on clicking the blog post pins, you will have to add an image src to test it out. If you want to play around with what it looks like inside an info window, then you have to modify the html string being passed to the map. Just remember to use double quotes " for inside the string and single quotes ' for the string itself, otherwise it won't work.
+
+meetup_window.html:
+This is the meetup info_window, I had some issues, but it should run from brackets now.  similar to post_window above, I've included a sample map to test it out on.
+
+blog.html:
+Looks great!!
+
+Dashboard:
+- I've included all the features required for now, some of them are not hooked up yet, but can be used for styling. If you could make something relatively adaptable for the stats page, like a grid or table where I can easily add more stats, that would be great. If all the stats use identical tags/format, like the three blog posts on the main page then I can even generate them on the fly without modifying the html later.
+
+status.html:
+- Simply a page that shows the status of an action, say "you have successfully sent a message to Farha.", Then redirects to the another page. I can handle the text comming in, and the redirect, but just need the message to look in keeping with the rest of the site. In the future this might be needed for other statuses.

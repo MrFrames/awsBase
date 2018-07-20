@@ -4,13 +4,15 @@ function initMap() {
     }
     map = new google.maps.Map(document.getElementById('map'), {
         center: startCoord,
-        zoom: 4
+        zoom: 4,
+        styles: getStyle()
     });
     
     console.log("initialising section map:")
     sectionMap = new google.maps.Map(document.getElementById('sectionMap'), {
         center: startCoord,
-        zoom: 10
+        zoom: 10,
+        styles: getStyle()
     });
     console.log("initDashMap version:1.1")
     var input = document.getElementById('pac-input');
@@ -108,8 +110,8 @@ function initMap() {
     
     /* START OF SECTION MAP FUNCTIONS */
     
-    var directionService = new google.maps.DirectionsService;
-    var directionsDisplay;
+    directionService = new google.maps.DirectionsService;
+directionsDisplay;
     
     var start = ""
     var end = ""
@@ -160,7 +162,6 @@ function initMap() {
 
                     console.log(wayPoint)
                     for (i = 0; i<wayPoint.length; i++){
-                        console.log(wayPoint[i].location.lat());
                         lat = wayPoint[i].location.lat();
                         lng = wayPoint[i].location.lng();
                         wayCoord = {"lat": lat, "lng": lng};
@@ -192,6 +193,111 @@ function initMap() {
     
 }
 
+function getStyle(){
+    return[
+            {elementType: 'geometry', 
+             stylers: [{color: '#fafae3'}]},
+            {elementType: 'labels.text.stroke', 
+             stylers: [{color: '#000000'},
+                      {strokeWeight: '1'},
+                      {visibility: 'off'}]},
+            
+            {elementType: 'labels.text.fill', 
+             stylers: [{color: '#58310d'},
+                      {fontWeight: '400'}]},
+            {
+              featureType: 'administrative.locality',
+              elementType: 'labels.text.fill',
+              stylers: [{/*fontFamily: 'Fira Sans'*/},
+                        {color: '#58310d'}]
+            },
+            
+            {
+              featureType: 'administrative.locality',
+              elementType: 'labels.text',
+              stylers: [{fontFamily: 'Fira Sans'},
+                        {color: '#58310d'},
+                       {fontWeight: '900'}]
+            },
+            
+            {
+              featureType: 'poi',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#58310d'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'geometry',
+              stylers: [{color: '#efedd0'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#9a6b83'}]
+            },
+
+            {
+              featureType: 'road',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#9ca5b3'}]
+            },
+            {
+              featureType: 'road.local',
+              elementType: 'geometry',
+              stylers: [{color: '#e3e0bd'},
+                       {weight: 1}]
+            },
+            {
+              featureType: 'road.arterial',
+              elementType: 'geometry',
+              stylers: [{color: '#e3e0bd'},
+                        {weight: 1}
+                       /*{visibility: 'off'}*/]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry',
+              stylers: [{color: '#c3bc89'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#c3bc89'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#f3d19c'}]
+            },
+            {
+              featureType: 'transit',
+              elementType: 'geometry',
+              stylers: [{color: '#2f3948'},
+                       {visibility: 'off'}]
+            },
+            {
+              featureType: 'transit.station',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{color: '#cac392'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#cac392'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.stroke',
+              stylers: [{color: '#cac392'}]
+            }
+          ];
+}
+
 function getDirectionRequest(start,end, waypoints, travelMode){
     return {
         origin: start,
@@ -218,7 +324,6 @@ function displayRoute(origin, destination, service, display) {
     });
 }
     
-
 function computeTotalDistance(result) {
     var total = 0;
     var myroute = result.routes[0];
@@ -227,34 +332,4 @@ function computeTotalDistance(result) {
     }
     total = total / 1000;
     document.getElementById('total').innerHTML = total + ' km';
-}
-
-function initDropdown(){
-    var post_names = Object.keys(posts);
-    console.log(post_names)
-    var option_list = [];
-    for (i=0; i<post_names.length; i++){
-        name = post_names[i];
-        console.log(name);
-        option_list.push(document.createElement("option"));
-        option_list[option_list.length-1].value = name;
-        option_list[option_list.length-1].innerHTML = name;
-        document.getElementById("post names").appendChild(option_list[option_list.length-1]);
-    }
-}
-
-function auto_fill(){
-    name = document.getElementById("post names").value;
-    console.log("name from dropdown:");
-    console.log(name);
-    coord = posts[name]["coord"];
-    
-    document.getElementById('placePk').value = posts[name]["placePk"];
-    document.getElementById('name').value = posts[name]["place_name"];
-    document.getElementById('lat').value = coord["lat"];
-    document.getElementById('lng').value = coord["lng"];
-
-    document.getElementById('postPk').value = posts[name]["postPk"];
-    document.getElementById('post_title').value = name;
-    quill.root.innerHTML = posts[name]["content"];
 }

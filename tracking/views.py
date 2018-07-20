@@ -269,16 +269,16 @@ def dash(request):
     '''
     all_posts_json = get_postsJson()
 
+    sections = get_sectionsJson4Dash()
 
     context = {
         "movingTime": movingTime,
         "distance": distance,
         "averageSpeed": averageSpeed,
         "elevation" : elevation,
-        "saved" : saveStatus,
-        "post_in" : post_in,
         "posts": all_posts_json,
-        "lastPos" : lastPos
+        "lastPos" : lastPos,
+        "sections" : sections
     }
     template = "tracking/dashboard.html"
 
@@ -318,6 +318,27 @@ def get_postsJson():
         post_dict[title] = inner_dict
 
     return json.dumps(post_dict)
+
+def get_sectionsJson4Dash():
+    all_sections = list(section.objects.all())
+
+    json_dict = {}
+    for sec in all_sections:
+        placeObjList = list(sec.place_set.all().order_by('order'))
+        startPlace = placeObjList.pop(placeObjList.index(sec.startPlace))
+        json_dict[sec.name] = {}
+        json_dict[sec.name]["secPk"] = sec.id
+        json_dict[sec.name]["start"] = {"lat":startPlace.lat,
+                                        "lng":startPlace.lon}
+        endPlace = placeObjList.pop(placeObjList.index(sec.endPlace))
+        json_dict[sec.name]["end"] = {"lat":endPlace.lat,
+                                        "lng":endPlace.lon}
+        placeList = [{"lat":i.lat,"lng":i.lon} for i in placeObjList]
+        for i in range(0,len(placeList)):
+            json_dict[sec.name]["waypoints"] = {}
+            json_dict[sec.name]["waypoints"][i] = placeList[i]
+
+    return json.dumps(json_dict)
 
 def saveSection(request):
     '''
