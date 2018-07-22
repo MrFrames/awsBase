@@ -24,10 +24,6 @@ body {
     visibility: hidden;
 }
 
-.show { /*use this to show stuff - any stuff*/
-    visibility: visible;
-}
-
 .disappear { /*to FADE stuff out*/
 	opacity: 0;
 }
@@ -102,12 +98,14 @@ li,
 h3,
 h2,
 h1,
-a {
+a,
+.separator {
     color: #58310d;
 }
 
 h1,
-h2 {
+h2,
+.separator {
 	font-family: 'Abril Fatface', cursive;
 }
 
@@ -162,18 +160,20 @@ h2.sec-tit {
 	font-size: 1.8em;
 	font-weight: 400;
 	text-align: center;
+    text-transform: capitalize;
 }
 
-p.intro-text {
-    width: 60%;
-	margin: 2em auto;
-	text-align: center;
-}
 
 p.section-text {
 	width: 60%;
+    max-width: 900px;
 	margin: 2em auto;
 	text-align: justify;
+}
+
+.separator {
+    text-align: center;
+    font-size: 2em;
 }
 
 
@@ -227,11 +227,20 @@ img.tile-img {
     text-align: center; 
 }
 
+.contact-text-wrapper img {
+    margin: 0 auto;
+    display: block;
+    padding-bottom: 1em;
+}
+
 .contact-button,
 .exit-button {
     cursor: pointer;
 }
 
+.show { /*use this to show stuff - any stuff*/
+    visibility: visible;
+}
 
                 /*BLOG PAGE*/
 

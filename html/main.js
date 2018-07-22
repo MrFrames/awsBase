@@ -25,7 +25,7 @@ $(document).ready(function () {
 
   //for the contact info that pops up when you click 'contact'
 
-  $("li.contact-button").click(function() {
+  $(".contact-button").click(function() {
     $(".contact-box").toggleClass("show");
   });
 
