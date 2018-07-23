@@ -12,7 +12,7 @@ $(".tabs").on("click", "li", function(){
 });
 
 document.getElementById("save_post").addEventListener("click",function(){
-    document.getElementById("post_content").innerHTML = (quill.root.innerHTML);
+    document.getElementById("post_content").innerHTML = (quill.root.innerHTML); 
 });
 
 if (saved !== "0"){
