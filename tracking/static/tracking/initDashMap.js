@@ -68,7 +68,7 @@ function initMap() {
             markers[markers.length-1].addListener('click', function(){
                 document.getElementById('lat').value = places[this.index].geometry.location.lat();
                 document.getElementById('lng').value = places[this.index].geometry.location.lng();
-                document.getElementById('name').value = places[this.index].formatted_address;
+                //document.getElementById('name').value = places[this.index].formatted_address;
             });
 
             // Auto fills the lat/lng section
@@ -84,14 +84,14 @@ function initMap() {
     console.log(places[0].geometry.location.lat());
     document.getElementById('lat').value = places[0].geometry.location.lat();
     document.getElementById('lng').value = places[0].geometry.location.lng();
-    document.getElementById('name').value = places[0].formatted_address;
+    //document.getElementById('name').value = places[0].formatted_address;
 
     map.fitBounds(bounds);
     });
 
     google.maps.event.addListener(map,'click',function(event){
         clearMap();
-        document.getElementById('name').value = "Clicked";
+        //document.getElementById('name').value = "Clicked";
         markers.push(new google.maps.Marker({
             position: {lat: event.latLng.lat(), lng: event.latLng.lng()},
             map: map,

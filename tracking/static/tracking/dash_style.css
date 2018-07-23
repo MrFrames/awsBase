@@ -80,7 +80,7 @@ blogPostContentInput{
     display: none;
 }
 .active{
-    display: block;
+    display: inline;
 }
 .tabs ul li.active{
     color: black;

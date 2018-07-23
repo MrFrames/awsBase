@@ -125,7 +125,7 @@
           var map;
           var sectionMap;
           markers =[];
-          console.log("Dashboard version 1.4")
+          console.log("Dashboard version 1.5")
           $(document).ready(function(){
               $(".tabs").on("click", "li", function(){
                   var tabsId = $(this).attr("id");
@@ -182,16 +182,9 @@
                        name="placePk"
                        hidden
                        id = "placePk"
-                       value = "0"/>
-                <input type="text"
-                       name="name"
-                       id="name" required
-                       pattern="^.{4,100}"
-                       title ="Place name must be a minimum of four characters." /><br/>
-                <input type="checkbox" name="show" value="True"> Publish<br>
-                <input type="checkbox" name="meetUp" value="True"> Set as meetup place<br>
-                <select id="post names" onchange="auto_fill()">
-                </select>
+                       value = "0"/><br/>
+                <input type="checkbox" name="meetUp" id = "meetUp" onchange="check()"> Set as meetup place.<br>
+                
                 <input type="text"
                        name="lat"
                        hidden
@@ -206,26 +199,34 @@
                        pattern="^-?([1][1-7][0-9]|[1-9][0-9]|[0-9])\.{1}\d{1,17}"
                        title="Longitude must be a number between -180 and 180." /><br><br>
                 <p class ="form_prompts" id="title">Add post:</p>
+                <select id="post_names" onchange="auto_fill()">
+                </select>
                 <input type="text"
                        name="postPk"
                        hidden
                        id="postPk"
                        value = "0"/>
-                <input type="file" name="pic" accept="image/*"/>
-                <p class ="form_prompts" style="display: inline">Post Title: </p>
+                <input type="file" name="pic" id = "pic" accept="image/*"/>
+                <p class ="form_prompts" id="ptitle" style="display: inline">Post Title: </p>
                 <input type="text" 
                        name="post_title"
                        id="post_title"
                        required pattern="^.{4,100}"
+                       value = "Post title here"
                        title="Post Title must be a minimum of four characters." /><br>
+                <p class ="form_prompts" style="display: inline">Place Name: </p>
+                <input type="text"
+                       name="name"
+                       id="name" required
+                       pattern="^.{4,100}"
+                       title ="Place name must be a minimum of four characters." />
             </form>
             <div id="editor">
                 <p>Hello World!</p>
                 <p>Some initial <strong>bold</strong> text</p><p><br></p>
             </div>
             <textarea name="post_content" hidden id="post_content" form="post_form" class="blogPostContentInput" rows ="20" cols ="100">This is a blog post</textarea><br>
-            <input type="submit" value="Save post" form="post_form" id="save_post"><br>
-            <h1><a href="/edit_post">Edit existing post</a></h1>
+            <input type="submit" value="Preview" form="post_form" id="save_post"><br>
         </div>
 
         <div id="tab-three-content-box" class="hide">

@@ -250,7 +250,6 @@ def dash(request):
     saveStatus is passed into the html to give a notification that a save
     was successful.
     '''
-    post_in = 0
     saveStatus = 0
     if request.method == 'POST':
             print(request.POST.get('meet up'))
@@ -339,6 +338,23 @@ def get_sectionsJson4Dash():
             json_dict[sec.name]["waypoints"][i] = placeList[i]
 
     return json.dumps(json_dict)
+
+def status_page(request):
+    '''
+    Below handles logic for different returns after form inpust: meetup,
+    blog posts, and map sections.
+
+    saveStatus is passed into the html to give a notification that a save
+    was successful.
+    '''
+    saveStatus = 0
+    if request.method == 'POST':
+        if request.POST.get('meet up'):
+            saveStatus = saveMeetUp(request)
+        elif request.POST.get('start'):
+            saveSection(request)
+        else:
+            saveStatus = savePost(request)
 
 def saveSection(request):
     '''

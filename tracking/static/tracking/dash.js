@@ -1,3 +1,4 @@
+console.log("dash.js version 1.6")
 
 $(".tabs").on("click", "li", function(){
   var tabsId = $(this).attr("id");
@@ -19,6 +20,39 @@ if (saved !== "0"){
     $('#tab-two-content-box').removeClass("hide").siblings().addClass("hide")
 };
 
+function check(){
+    var checkbox = document.getElementById('meetUp');
+    if (!checkbox.checked){
+        console.log("activated");
+        document.getElementById("ptitle").innerHTML = "Post Title:";
+        document.getElementById("title").innerHTML = "Save Post";
+        $('#post_names').addClass("active").removeClass("hide");
+        $('#post_title').addClass("active").removeClass("hide");
+        $('#editor').addClass("active").removeClass("hide");
+        $('#pic').addClass("active").removeClass("hide");
+    } else {
+        console.log("hidden");
+        document.getElementById("title").innerHTML = "Save meet-up pin:";
+        document.getElementById("ptitle").innerHTML = "";
+        $('#post_names').addClass("hide").removeClass("active");
+        $('#post_title').addClass("hide").removeClass("active");
+        $('#editor').addClass("hide").removeClass("active");
+        $('#pic').addClass("hide").removeClass("active");
+        
+    }
+}
+
+var checked = 0;
+$('#meetUp').change(function(){
+    if (checked===0){
+
+        checked = 1;
+    } else {
+
+        checked = 0;
+    }
+});
+
 var post_names = Object.keys(posts);
 var option_list = [];
 for (i=0; i<post_names.length; i++){
@@ -26,7 +60,7 @@ for (i=0; i<post_names.length; i++){
     option_list.push(document.createElement("option"));
     option_list[option_list.length-1].value = name;
     option_list[option_list.length-1].innerHTML = name;
-    document.getElementById("post names").appendChild(option_list[option_list.length-1]);
+    document.getElementById("post_names").appendChild(option_list[option_list.length-1]);
 };
 
 function auto_fill(){
