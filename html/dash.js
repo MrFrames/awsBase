@@ -1,6 +1,6 @@
 console.log("dash.js version 1.6")
 
-$(".tabs").on("click", "li", function(){
+$(".tabs").on("click", ".tab-btn", function(){
   var tabsId = $(this).attr("id");
   $(this).addClass("active").siblings().removeClass("active");
   $('#' + tabsId + '-content-box').addClass("active").siblings().removeClass("active");
