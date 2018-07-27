@@ -1,4 +1,4 @@
-{% load staticfiles %}
+<!--{% load staticfiles %}-->
 <!DOCTYPE html>
 <html lang="en">
 <html>
@@ -16,7 +16,7 @@
         -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <link rel="stylesheet" href="dash_style.css">
-      <link href="https://fonts.googleapis.com/css?family=Fira+Mono" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Fira+Mono|Raleway:200,100" rel="stylesheet">
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src='initDashMap.js'></script>
@@ -137,46 +137,59 @@
       </script>
   </head>
   <body>
+      
     <div class="tabs">
-            <div class="tab-btn active" id="tab-one">
-                <i class="fas fa-tachometer-alt" ></i>
-                <h4>Stats</h4>
-            </div>
-            <div class="tab-btn" id="tab-two" >
-                <i class="fas fa-comment-alt"></i>
-                <h4>Post</h4>
-            </div>
-            <div class="tab-btn" id="tab-three">
-                <i class="fas fa-globe-africa"></i>
-                <h4>Routes</h4>
-            </div>
-        
+        <div class="tab-btn active" id="tab-one">
+            <i class="fas fa-tachometer-alt" ></i>
+            <h4>Stats</h4>
+        </div>
+        <div class="tab-btn" id="tab-two" >
+            <i class="fas fa-comment-alt"></i>
+            <h4>Post</h4>
+        </div>
+        <div class="tab-btn" id="tab-three">
+            <i class="fas fa-globe-africa"></i>
+            <h4>Routes</h4>
+        </div>
     </div>
-    
+        <p class="logout"><a href="/logout/">Logout!</a> </p>
+      
+   
     
     <div class="content">
         <!-- the stats tab content -->
         <div id="tab-one-content-box" class="active">
-            <h1>Hi Farha!</h1><br/>
-            <h1>You have travelled a total of {{distance}},</h1>
-            <h1>Your average speed is {{averageSpeed}},</h1>
-            <h1>you have cycled for {{movingTime}},</h1>
-            <h1>and the total distance you have cycled uphill is {{ elevation }}</h1>
-            <h1><a href="/logout/">Logout!</a> </h1>
+<!--            <h1 class="stats-txt">Hi Farha!</h1><br/>-->
+            
+            <h1 class="stats-txt">You have travelled a total of</h1>
+            <h1 class="stat">123 Miles</h1>
+            
+            <h1 class="stats-txt">Your average speed is</h1><!--{{averageSpeed}},-->
+            <h1 class="stat">10 mph</h1>
+            
+            
+            <h1 class="stats-txt">You have cycled for</h1>
+            <!--{{movingTime}},-->
+            <h1 class="stat">42 hours</h1>
+            
+            <h1 class="stats-txt">And the total distance you have cycled uphill is</h1>
+            <!--{{ elevation }}-->
+            <h1 class="stat">31.2 Miles</h1>           
         </div>
+        
+        <!-- posts -->
         <div id="tab-two-content-box" class="hide">
-            <!-- 
-                This is the post form:
-            -->
-            <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+            
+            <input id="pac-input" class="controls search-box" type="text" placeholder="Find A Place...">
             <div id="map"></div>
-            <form action="/dashboard/" enctype="multipart/form-data" id="post_form", method="post">{% csrf_token %}
-                <p class ="form_prompts">Address:</p>
+            <form action="/dashboard/" enctype="multipart/form-data" id="post_form", method="post"><!--{% csrf_token %}-->
+<!--                <p class ="form_prompts">Address:</p>-->
                 <input type="text"
                        name="placePk"
                        hidden
                        id = "placePk"
                        value = "0"/><br/>
+                
                 <input type="checkbox" name="meetUp" id = "meetUp" onchange="check()"> Set as meetup place.<br>
                 
                 <input type="text"
@@ -192,29 +205,36 @@
                        required
                        pattern="^-?([1][1-7][0-9]|[1-9][0-9]|[0-9])\.{1}\d{1,17}"
                        title="Longitude must be a number between -180 and 180." /><br><br>
+                
                 <p class ="form_prompts" id="title">Add post:</p>
-                <select id="post_names" onchange="auto_fill()">
-                </select>
-                <input type="text"
+                
+                <select id="post_names" onchange="auto_fill()"></select>
+                
+                <input class="text-inputs" type="text"
                        name="postPk"
                        hidden
                        id="postPk"
                        value = "0"/>
+                
                 <input type="file" name="pic" id = "pic" accept="image/*"/>
-                <p class ="form_prompts" id="ptitle" style="display: inline">Post Title: </p>
-                <input type="text" 
+                
+                <p class ="form_prompts" id="ptitle">Post Title: </p>
+                <input class="text-inputs" type="text" 
                        name="post_title"
                        id="post_title"
                        required pattern="^.{4,100}"
                        value = "Post title here"
                        title="Post Title must be a minimum of four characters." /><br>
-                <p class ="form_prompts" style="display: inline">Place Name: </p>
-                <input type="text"
+                
+                <p class ="form_prompts">Place Name: </p>
+                <input class="text-inputs" type="text"
                        name="name"
                        id="name" required
                        pattern="^.{4,100}"
                        title ="Place name must be a minimum of four characters." />
             </form>
+            
+            
             <div id="editor">
                 <p>Hello World!</p>
                 <p>Some initial <strong>bold</strong> text</p><p><br></p>
@@ -229,6 +249,7 @@
                 </script>
         </div>
 
+        <!--routes-->
         <div id="tab-three-content-box" class="hide">
             <!-- 
                 Hidden form elements are used to pass json data through a post request. The select tag (dropdown menu) is just a stand in to make styling easier & isn't connected yet. 

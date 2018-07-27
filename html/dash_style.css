@@ -2,24 +2,16 @@
     box-sizing: border-box;
 }
 
-#map {
-    height: 50vh;
-    width: 100vw;
-}
 
-#sectionMap {
-    height: 50vh;
-    width: 100vw;
-}
-
-html, body {
-    font-family: sans-serif;
+body {
+    font-family: 'Fira Mono', monospace;
 }
 
 /* Styles tab buttons at the top of the page */
+
 .tabs {
-    width: 50%;
-    margin: 0 auto;
+    width: 60%;
+    margin: 1.8em auto 3em auto;
     background-color: white;
     display: flex;
     justify-content: space-around;
@@ -36,23 +28,68 @@ html, body {
 
 .tab-btn{
     padding: 5px;
-    width: 17%;
+    width: 6em;
     text-align: center;
-    list-style: none;
     color: grey;
-    border-radius: 5px;
+    border-radius: 1px;
+    cursor: pointer;
 }
 
 .tab-btn .fas{
-    font-size: 2em;
+    font-size: 1.5em;
     margin-top: 0.5em;
+}
+
+h4 {
+    margin: 0.7em auto;
 }
 
 .tabs .active {
     color: black;
-    box-shadow: 1px 1px 2px 2px #888888;
+    box-shadow: 4px 4px  black;
+    border: solid 1px black;
     z-index: 10;
 }
+
+.tab-btn:hover {
+    color: black;
+    box-shadow: 4px 4px  black;
+    border: solid 1px black;
+}
+
+.logout {
+    font-size: 1.2em;
+    position: absolute;
+    left: 1.5em;
+    top: 0.6em;
+}
+
+/*
+.tab-btn:hover h4 {
+    background: yellow;
+}
+*/
+
+.content{
+    width: 100%;
+}
+
+                        /* STATS TAB*/
+
+h1.stats-txt {
+    text-align: center;
+    font-size: 1.8em;
+}
+
+.stat {
+    text-align: center;
+    margin: 0;
+    margin-bottom: 1.7em;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 3em;
+}
+
 /*
 .tabs ul{
     margin: 0px;
@@ -75,38 +112,58 @@ html, body {
     font-size: 36px;
     margin-top: 13px;
 }
-*/
 
-/*
 .tabs ul li h4{
     font-size: 36px;
     margin-top: 13px;
 }
 */
 
+                        /* POST TAB*/
+
+#sectionMap, #map {
+    height: 35em;
+    width: 100%;
+}
+
+.search-box {
+    font-size: 1.3em;
+    border: 2px solid black;
+    font-family: 'Fira Mono', monospace;
+    padding: 0.2em;
+}
+
+.form_prompts { /*for the names of text inputs etc*/
+    font-size: 1.3em;
+}
+
+.text-inputs { /*actual text input boxes*/
+    border: 2px solid black;
+    font-family: 'Fira Mono', monospace;
+    font-size: 1em;
+    padding: 0.2em
+}
+
+/*
 blogPostContentInput{
     height: 200px;
     width: 400px
 }
-.content{
-    width: 100%;
-}
+*/
 
-#tab-one-content-box{
-    width: 100%;
-}
-
-#tab-two-content-box{
-    width: 100%;
-}
-
-#tab-three-content-box{
-    width: 100%;
-}
-
-.hide{
+.hide {
     display: none;
 }
 .active{
     display: block;
+}
+
+                /*LINK STYLING*/
+
+a:hover {
+    background: yellow;
+}
+
+a {
+    color: black;
 }
