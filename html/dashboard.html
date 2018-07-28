@@ -182,6 +182,9 @@
             
             <input id="pac-input" class="controls search-box" type="text" placeholder="Find A Place...">
             <div id="map"></div>
+            
+            <div class="main-content-wrapper">
+             <h1 class="tab-title">Write Blog Post</h1>
             <form action="/dashboard/" enctype="multipart/form-data" id="post_form", method="post"><!--{% csrf_token %}-->
 <!--                <p class ="form_prompts">Address:</p>-->
                 <input type="text"
@@ -189,8 +192,6 @@
                        hidden
                        id = "placePk"
                        value = "0"/><br/>
-                
-                <input type="checkbox" name="meetUp" id = "meetUp" onchange="check()"> Set as meetup place.<br>
                 
                 <input type="text"
                        name="lat"
@@ -204,40 +205,44 @@
                        id="lng"
                        required
                        pattern="^-?([1][1-7][0-9]|[1-9][0-9]|[0-9])\.{1}\d{1,17}"
-                       title="Longitude must be a number between -180 and 180." /><br><br>
-                
-                <p class ="form_prompts" id="title">Add post:</p>
-                
-                <select id="post_names" onchange="auto_fill()"></select>
-                
+                       title="Longitude must be a number between -180 and 180." />
+
                 <input class="text-inputs" type="text"
                        name="postPk"
                        hidden
                        id="postPk"
                        value = "0"/>
                 
-                <input type="file" name="pic" id = "pic" accept="image/*"/>
                 
-                <p class ="form_prompts" id="ptitle">Post Title: </p>
-                <input class="text-inputs" type="text" 
+                
+                <div class="flex-input-wrapper">
+                    <p class ="form_prompts" id="ptitle">Title: </p>
+                    <input class="text-inputs" type="text" 
                        name="post_title"
                        id="post_title"
                        required pattern="^.{4,100}"
-                       value = "Post title here"
-                       title="Post Title must be a minimum of four characters." /><br>
+                       placeholder = "e.g 'fuck I'm tired'"
+                       title="Post Title must be a minimum of four characters." />
+                </div>
                 
-                <p class ="form_prompts">Place Name: </p>
-                <input class="text-inputs" type="text"
-                       name="name"
-                       id="name" required
-                       pattern="^.{4,100}"
-                       title ="Place name must be a minimum of four characters." />
+                <div class="flex-input-wrapper">
+                    <p class ="form_prompts">Where are you?</p><br>
+                    <input class="text-inputs" type="text"
+                           name="name"
+                           id="name" required
+                           pattern="^.{4,100}"
+                           placeholder = "...or where are you writing about?"
+                           title ="Place name must be a minimum of four characters." />
+                </div>
+                
+                <input type="checkbox" name="meetUp" id = "meetUp" onchange="check()"> Set as meetup place.<br>
+                <input type="file" name="pic" id = "pic" accept="image/*"/>
+                <select id="post_names" onchange="auto_fill()"></select>
             </form>
             
             
             <div id="editor">
-                <p>Hello World!</p>
-                <p>Some initial <strong>bold</strong> text</p><p><br></p>
+                <p>Hey Farha, maybe your first few posts should be about how cool Ben and Georgia are? Just saying. Just a thought...</p>
             </div>
             <textarea name="post_content" hidden id="post_content" form="post_form" class="blogPostContentInput" rows ="20" cols ="100">This is a blog post</textarea><br>
             <input type="submit" value="Save post" form="post_form" id="save_post"><br>
@@ -247,6 +252,8 @@
                     });
                     //init_dropdown();
                 </script>
+                
+            </div>
         </div>
 
         <!--routes-->

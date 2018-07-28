@@ -11,6 +11,14 @@ $(".tabs").on("click", ".tab-btn", function(){
   };
 });
 
+$(".tab-btn").mousedown(function() {
+    $(this).toggleClass("btn-click");
+});
+
+$(".tab-btn").mouseup(function() {
+    $(this).toggleClass("btn-click");
+});
+
 document.getElementById("save_post").addEventListener("click",function(){
     document.getElementById("post_content").innerHTML = (quill.root.innerHTML); 
 });
