@@ -79,8 +79,8 @@ h4 {
     width: 100%;
 }
 
-.main-content-wrapper { /*for tab 1 and 2 content excluding map*/
-    margin: 0 5em;
+.main-content-wrapper { /*for tab 2 and 3 content excluding map*/
+    margin: 0 4em;
 }
 
                         /* STATS TAB*/
@@ -162,13 +162,22 @@ h1.stats-txt {
     opacity: 1;
 }
 
+.main-form-content {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
 
-.flex-input-wrapper {
+.form-half {/*two halves left and right*/
+    width: 50%;
+}
+
+.flex-input-wrapper { /*wraps prompt and input/checkbox/whatever pairs*/
     display: flex;
     justify-content: space-between;
     margin-bottom: 2em;
-    width: 40%;
 }
+
 
 
 /*

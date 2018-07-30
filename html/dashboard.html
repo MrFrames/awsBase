@@ -213,31 +213,42 @@
                        id="postPk"
                        value = "0"/>
                 
-                
-                
+            <div class="main-form-content">
+                <div class="form-half">
                 <div class="flex-input-wrapper">
-                    <p class ="form_prompts" id="ptitle">Title: </p>
+                <p class ="form_prompts" id="ptitle">Title: </p>
                     <input class="text-inputs" type="text" 
                        name="post_title"
                        id="post_title"
                        required pattern="^.{4,100}"
                        placeholder = "e.g 'fuck I'm tired'"
                        title="Post Title must be a minimum of four characters." />
-                </div>
+                    </div>
+                    <div class="flex-input-wrapper">
+                        <p class ="form_prompts">Where are you?</p><br>
+                        <input class="text-inputs" type="text"
+                               name="name"
+                               id="name" required
+                               pattern="^.{4,100}"
+                               placeholder = "...or where are you writing about?"
+                               title ="Place name must be a minimum of four characters." />
+                    </div>
+                </div>  
+              
                 
-                <div class="flex-input-wrapper">
-                    <p class ="form_prompts">Where are you?</p><br>
-                    <input class="text-inputs" type="text"
-                           name="name"
-                           id="name" required
-                           pattern="^.{4,100}"
-                           placeholder = "...or where are you writing about?"
-                           title ="Place name must be a minimum of four characters." />
+                <div class="form-half">
+                    <div class="flex-input-wrapper">
+                        <input type="checkbox" name="meetUp" id = "meetUp" onchange="check()"> 
+                        <p class="form_prompts">Set as meetup place.</p>
+                    </div>
+                    <div class="flex-input-wrapper">
+                        <input type="file" name="pic" id = "pic" accept="image/*"/>
+                        <select id="post_names" onchange="auto_fill()"></select>
+                    </div>
                 </div>
+            </div>
+              
                 
-                <input type="checkbox" name="meetUp" id = "meetUp" onchange="check()"> Set as meetup place.<br>
-                <input type="file" name="pic" id = "pic" accept="image/*"/>
-                <select id="post_names" onchange="auto_fill()"></select>
             </form>
             
             
